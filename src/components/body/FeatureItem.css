@@ -33,3 +33,11 @@
 .feature-description p {
   margin: 10px 0;
 }
+
+.feature-description p b {
+  color: var(--accent);
+}
+
+.feature-description p i {
+  font-size: 14px;
+}

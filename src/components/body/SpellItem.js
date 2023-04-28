@@ -11,6 +11,11 @@ function SpellItem(props) {
     }
   });
 
+  let concentrationSpell = false;
+  if (activeSpell.duration.includes('Concentration')) {
+    concentrationSpell = true;
+  }
+
   const spellItemClickHandler = (e) => {
     e.target.closest('.spell-item').classList.toggle('active');
   }
@@ -19,6 +24,7 @@ function SpellItem(props) {
     <div className='spell-item flex-column-centered' onClick={spellItemClickHandler}>
       <div className='spell-name'>{activeSpell.name}</div>
       <div className='spell-level'>{activeSpell.level}</div>
+      {concentrationSpell && <div className='concentration-spell-indicator'>C</div>}
       <div className='spell-info'>
         <div className='spell-casting-time'><b>Casting Time: </b>{activeSpell.castingTime}</div>
         <div className='spell-range'><b>Range: </b>{activeSpell.range}</div>

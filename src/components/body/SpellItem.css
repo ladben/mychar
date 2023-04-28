@@ -24,7 +24,8 @@
   color: var(--accent);
 }
 
-.spell-level {
+.spell-level,
+.concentration-spell-indicator {
   position: absolute;
   top: 0;
   left: 0;
@@ -33,6 +34,12 @@
   padding: 2px 4px;
   border-radius: 3px;
   font-size: 14px;
+}
+
+.concentration-spell-indicator {
+  left: unset;
+  right: 0;
+  background: #E0E80B;
 }
 
 .spell-info {
@@ -55,4 +62,14 @@
 .spell-description ul li {
   list-style-type: disc;
   margin-bottom: 5px;
+}
+
+.spell-description p b,
+.spell-description li b {
+  color: var(--accent);
+}
+
+.spell-description p i,
+.spell-description li i {
+  font-size: 14px;
 }
