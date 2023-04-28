@@ -12,7 +12,6 @@ function FeatureItem(props) {
   });
 
   const featureItemClickHandler = (e) => {
-    console.log(e.target.closest('.feature-item'));
     e.target.closest('.feature-item').classList.toggle('active');
   }
 

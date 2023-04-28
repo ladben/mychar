@@ -1,5 +1,5 @@
 import './Body.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Navigation from './Navigation.js';
 import FeatureItem from './FeatureItem';
@@ -8,6 +8,13 @@ function Body(props) {
   const {selectedChar, characterAbilities} = props;
 
   const [selectedAbility, setSelectedAbility] = useState('features');
+
+  useEffect(() => {
+    const abilityWrapperList = document.querySelectorAll('.ability-wrapper');
+    abilityWrapperList.forEach(abilityWrapper => {
+      abilityWrapper.classList.toggle('active');
+    })
+  }, [selectedAbility]);
 
   const selectedCharId = selectedChar.id;
   let featureList = [];
