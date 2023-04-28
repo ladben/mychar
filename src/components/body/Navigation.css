@@ -1,7 +1,7 @@
 .ability-navigation {
   display: flex;
-  padding: 5px;
-  gap: 5px;
+  padding: 5px 10px;
+  gap: 10px;
 }
 
 .nav-item {
