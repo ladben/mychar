@@ -1,0 +1,35 @@
+.feature-item {
+  border: 1px solid;
+  aspect-ratio: 1;
+  padding: 10px;
+  justify-content: center;
+  border-radius: 5px;
+  gap: 5px;
+}
+
+.feature-item.active {
+  grid-column-start: 1;
+  grid-column-end: span 3;
+  aspect-ratio: unset;
+}
+
+.feature-name {
+  font-size: 20px;
+  text-align: center;
+}
+
+.feature-item.active .feature-name {
+  color: var(--accent);
+}
+
+.feature-description {
+  display: none;
+}
+
+.feature-item.active .feature-description {
+  display: block;
+}
+
+.feature-description p {
+  margin: 10px 0;
+}

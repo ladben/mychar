@@ -4,8 +4,11 @@
 
 .ability-wrapper {
   display: none;
+  padding: 10px;
 }
 
 .ability-wrapper.active {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 100%));
+  gap: 10px;
 }

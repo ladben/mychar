@@ -25,7 +25,7 @@ function App() {
   return (
     <div className='outer-wrapper flex-column-centered'>
       <Heading selectedChar={{...selectedChar}} characters={[...characters]} updateSelectedCharHandler={updateSelectedChar}/>
-      <Body characterAbilities={{...characterAbilities}} selectedChar={{...selectedChar}}/>
+      <Body characterAbilities={[...characterAbilities]} selectedChar={{...selectedChar}}/>
     </div>
   );
 }
