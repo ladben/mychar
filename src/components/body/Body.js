@@ -13,7 +13,13 @@ function Body(props) {
   useEffect(() => {
     const abilityWrapperList = document.querySelectorAll('.ability-wrapper');
     abilityWrapperList.forEach(abilityWrapper => {
-      abilityWrapper.classList.toggle('active');
+      if (abilityWrapper.classList.contains(selectedAbility + '-wrapper')) {
+        abilityWrapper.classList.add('active');
+      }
+
+      if (!abilityWrapper.classList.contains(selectedAbility + '-wrapper')) {
+        abilityWrapper.classList.remove('active');
+      }
     })
   }, [selectedAbility]);
 
