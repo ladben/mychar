@@ -1,0 +1,16 @@
+.ability-navigation {
+  display: flex;
+  padding: 5px;
+  gap: 5px;
+}
+
+.nav-item {
+  flex: 0 1 50%;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid;
+}
+
+.nav-item.active {
+  color: var(--accent);
+}
