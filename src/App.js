@@ -1,23 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+
+import Heading from './components/header/Heading.js';
 
 function App() {
+  const characters = [{
+    id: 1,
+    name: 'Jörmungandr'
+  }, {
+    id: 2,
+    name: 'Rex Erectio'
+  }];
+
+  let defaultSelectedChar = characters[0];
+  const lsSelectedChar = window.localStorage.getItem('_selectedChar');
+
+  if (lsSelectedChar) {
+    defaultSelectedChar = JSON.parse(lsSelectedChar);
+  }
+
+  const [selectedChar, setSelectedChar] = useState(defaultSelectedChar);
+
+  window.localStorage.setItem('_selectedChar', JSON.stringify({id: selectedChar.id, name: selectedChar.name}));
+
+  const updateSelectedChar = (id, name) => {
+    setSelectedChar({id, name});
+    window.localStorage.setItem('_selectedChar', JSON.stringify({id, name}));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='outer-wrapper flex-column-centered'>
+      <Heading selectedChar={{...selectedChar}} characters={[...characters]} updateSelectedCharHandler={updateSelectedChar}/>
+      <div className='body'>BODY</div>
+      <div className='footer'>FOOTER</div>
     </div>
   );
 }
