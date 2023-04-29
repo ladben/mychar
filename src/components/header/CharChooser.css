@@ -20,7 +20,7 @@
   transform-origin: top;
   transform: scaleY(0);
   transition: transform 300ms ease-in-out;
-  z-index: 1;
+  z-index: 10;
 }
 
 .character-list-wrapper.open {
