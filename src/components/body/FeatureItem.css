@@ -16,6 +16,8 @@
 .feature-name {
   font-size: 20px;
   text-align: center;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 
 .feature-item.active .feature-name {
@@ -24,6 +26,7 @@
 
 .feature-description {
   display: none;
+  line-height: 1.3;
 }
 
 .feature-item.active .feature-description {
