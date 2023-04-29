@@ -48,7 +48,7 @@ const features = [{
   description: `
     <div>
       <p>You can <b>use your action</b> to exhale destructive energy: <b>cold damage in a 15 ft. cone.</b></p>
-      <p>When you use your breath weapon, each creature in the area of the exhalation must make a <b>constitution saving throw, DC 15</b>.<br/><i>(8 + your Constitution modifier + your proficiency bonus)</i> A creature takes <b>2d6 damage on a failed</b> save, and <b>half as much damage on a successful</b> one.</p>
+      <p>When you use your breath weapon, each creature in the area of the exhalation must make a <b>Constitution saving throw, DC 13</b>.<br/><i>(8 + your Constitution modifier + your proficiency bonus)</i> A creature takes <b>2d6 damage on a failed</b> save, and <b>half as much damage on a successful</b> one.</p>
       <p>After you use your breath weapon, you can't use it again until you <b>complete a short or long rest.</b></p>
     </div>`
 }, {
@@ -57,6 +57,45 @@ const features = [{
   description: `
     <div>
       <p>You have resistance to cold damage.</p>
+    </div>`
+}, {
+  id: 8,
+  name: "Bardic Inspiration",
+  description: `
+    <div>
+      <p>You can inspire others through stirring words or music. To do so, you use a <b>bonus action</b> on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a <b>d8</b>.</p>
+      <p>Once within the next 10 minutes, the creature can roll the die and add the number rolled to one <b>ability check, attack roll, or saving throw</b> it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the DM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time.</p>
+      <p>You can use this feature a <b>4 times</b> <i>(your Charisma modifier)</i>. You regain any expended uses when you finish a <b>short or a long rest</b> <i>(Font of Inspiration feature)</i>.</p>
+    </div>`
+}, {
+  id: 9,
+  name: "Song of Rest",
+  description: `
+    <div>
+      <p>Beginning at 2nd level, you can use soothing music or oration to help revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your performance regain hit points by spending Hit Dice at the end of the short rest, each of those creatures regains an <b>extra 1d6 hit points</b>.</p>
+    </div>`
+}, {
+  id: 10,
+  name: "Cutting Words",
+  description: `
+    <div>
+      <p>Also at 3rd level, you learn how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others. When a creature that you can see within 60 feet of you makes an <b>attack roll, an ability check, or a damage roll</b>, you can <b>use your reaction</b> to expend one of your uses of <b>Bardic Inspiration</b>, rolling a Bardic Inspiration die and subtracting the number rolled from the creature's roll. You can choose to use this feature after the creature makes its roll, but before the DM determines whether the attack roll or ability check succeeds or fails, or before the creature deals its damage. The creature is <b>immune if it can't hear you or if it's immune to being charmed</b>.</p>
+    </div>`
+}, {
+  id: 11,
+  name: "Breath Weapon",
+  description: `
+    <div>
+      <p>You can <b>use your action</b> to exhale destructive energy: <b>lightning damage in a 5 by 30 ft. line.</b></p>
+      <p>When you use your breath weapon, each creature in the area of the exhalation must make a <b>Dexterity saving throw, DC 13</b>.<br/><i>(8 + your Constitution modifier + your proficiency bonus)</i> A creature takes <b>2d6 damage on a failed</b> save, and <b>half as much damage on a successful</b> one.</p>
+      <p>After you use your breath weapon, you can't use it again until you <b>complete a short or long rest.</b></p>
+    </div>`
+}, {
+  id: 12,
+  name: "Damage Resistance",
+  description: `
+    <div>
+      <p>You have resistance to lightning damage.</p>
     </div>`
 }];
 
@@ -420,7 +459,7 @@ const characterAbilities = [{
   spellList: [1, 2, 3, 4, 5, 101, 102, 103, 201, 202, 301, 302]
 }, {
   characterId: 2,
-  featureList: [],
+  featureList: [8, 9, 10, 11, 12],
   spellList: [2, 6, 7, 8, 9, 10, 11, 104, 105, 106, 107, 108, 109, 203, 204, 303, 304]
 }];
 
