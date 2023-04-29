@@ -13,6 +13,8 @@ function FeatureItem(props) {
 
   const featureItemClickHandler = (e) => {
     e.target.closest('.feature-item').classList.toggle('active');
+    const topPosition = e.target.closest('.feature-item').offsetTop - 10;
+    window.scrollTo({top: topPosition, left: 0, behavior: 'smooth'});
   }
 
   return (

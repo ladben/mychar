@@ -18,6 +18,8 @@ function SpellItem(props) {
 
   const spellItemClickHandler = (e) => {
     e.target.closest('.spell-item').classList.toggle('active');
+    const topPosition = e.target.closest('.spell-item').offsetTop - 10;
+    window.scrollTo({top: topPosition, left: 0, behavior: 'smooth'});
   }
 
   return (
