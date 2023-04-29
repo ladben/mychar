@@ -22,11 +22,30 @@ function SpellItem(props) {
     window.scrollTo({top: topPosition, left: 0, behavior: 'smooth'});
   }
 
+  const concentrationHandler = () => {
+    if (props.spellId === props.concentration.spellId) {
+      props.updateConcentration({active: false, spellId: 0});
+    }
+    if (props.spellId !== props.concentration.spellId) {
+      props.updateConcentration({active: true, spellId: props.spellId})
+    }
+  }
+
+  let concentrationDiffClass = ''
+  if (props.concentration.active && concentrationSpell) {
+    // setting differentiating class if concentration is active
+    if (props.spellId === props.concentration.spellId) {
+      concentrationDiffClass = ' accented';
+    } else {
+      concentrationDiffClass = ' disabled';
+    }
+  }
+
   return (
-    <div className='spell-item flex-column-centered' onClick={spellItemClickHandler}>
+    <div className={'spell-item flex-column-centered' + concentrationDiffClass} onClick={spellItemClickHandler} data-concentration-spell={concentrationSpell}>
       <div className='spell-name'>{activeSpell.name}</div>
       <div className='spell-level'>{activeSpell.level}</div>
-      {concentrationSpell && <div className='concentration-spell-indicator'>C</div>}
+      {concentrationSpell && <div className='concentration-spell-indicator' onClick={concentrationHandler}>C</div>}
       <div className='spell-info'>
         <div className='spell-casting-time'><b>Casting Time: </b>{activeSpell.castingTime}</div>
         <div className='spell-range'><b>Range: </b>{activeSpell.range}</div>

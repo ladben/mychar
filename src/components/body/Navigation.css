@@ -14,3 +14,8 @@
 .nav-item.active {
   color: var(--accent);
 }
+
+.nav-item.accented {
+  color: #E0E80B;
+  filter: hue-rotate(45deg);
+}

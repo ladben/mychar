@@ -10,6 +10,9 @@ function Navigation(props) {
   if (props.selectedAbility === 'spells') {
     spellsClass = ' active';
   }
+  if (props.concentration) {
+    spellsClass = spellsClass.concat(' accented');
+  }
 
   return (
     <nav className='ability-navigation'>

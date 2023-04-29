@@ -9,6 +9,7 @@ function Body(props) {
   const {selectedChar, characterAbilities} = props;
 
   const [selectedAbility, setSelectedAbility] = useState('features');
+  const [concentration, setConcentraton] = useState({active: false, spellId: 0});
 
   useEffect(() => {
     const abilityWrapperList = document.querySelectorAll('.ability-wrapper');
@@ -35,12 +36,12 @@ function Body(props) {
 
   return (
     <div className='body-wrapper'>
-      <Navigation selectedAbility={selectedAbility} updateSelectedAbilityHandler={setSelectedAbility}/>
+      <Navigation selectedAbility={selectedAbility} updateSelectedAbilityHandler={setSelectedAbility} concentration={concentration.active}/>
       <div className='ability-wrapper features-wrapper active'>
         {featureList.map((feature, i) => <FeatureItem key={"feature-" + i} featureId={feature}/>)}
       </div>
       <div className='ability-wrapper spells-wrapper'>
-        {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spellId={spell}/>)}
+        {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spellId={spell} concentration={{...concentration}} updateConcentration={setConcentraton}/>)}
       </div>
     </div>
   );

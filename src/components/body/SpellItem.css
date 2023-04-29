@@ -15,6 +15,16 @@
   aspect-ratio: unset;
 }
 
+.spell-item.disabled {
+  filter: brightness(0.5) grayscale(1);
+}
+
+.spell-item.accented {
+  filter: hue-rotate(45deg);
+  border: 1px solid #E0E80B;
+
+}
+
 .spell-name {
   font-size: 18px;
   text-align: center;
@@ -43,6 +53,21 @@
   left: unset;
   right: 0;
   background: #E0E80B;
+}
+
+.spell-item.active .concentration-spell-indicator::after {
+  content: 'Start';
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: inherit;
+  border-radius: inherit;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.spell-item.active.accented .concentration-spell-indicator::after {
+  content: 'Stop';
 }
 
 .spell-info {
