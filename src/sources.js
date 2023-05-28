@@ -1,8 +1,11 @@
 const characters = [{
   id: 1,
-  name: 'Jörmungandr'
+  name: 'Jörmungandr lvl5'
 }, {
   id: 2,
+  name: 'Jörmungandr lvl6'
+}, {
+  id: 3,
   name: 'Rex Erectio'
 }];
 
@@ -97,6 +100,14 @@ const features = [{
     <div>
       <p>You have resistance to lightning damage.</p>
     </div>`
+}, {
+  id: 13,
+  name: "Dark One's Own Luck",
+  description: `
+    <div>
+      <p>You can call on your patron to alter fate in your favor. When you make an <b>ability check or a saving throw</b>, you can use this feature to <b>add a d10 to your roll.</b> You can do so after seeing the initial roll but before any of the roll's effects occur.</p>
+      <p>Once you use this feature, you can't use it again until you <b>finish a short or long rest.</b></p>  
+    <div>`
 }];
 
 const spells = [{
@@ -451,6 +462,18 @@ const spells = [{
       <p>Choose a willing creature that you can see within range. Until the spell ends, the target's <b>speed is doubled</b>, it gains a <b>+2 bonus to AC</b>, it has <b>advantage on Dexterity saving throws</b>, and it gains <b>an additional action</b> on each of its turns. That action can be used only to take the <b>Attack (one weapon attack only), Dash, Disengage, Hide, or Use an Object</b> action.</p>
       <p>When the spell ends, the target <b>can't move or take actions</b> until after its next turn, as a wave of lethargy sweeps over it.</p>
     </div>`
+}, {
+  id: 305,
+  name: "Fear",
+  level: "3rd-level",
+  castingTime: "1 action",
+  range: "Self (30-foot cone)",
+  duration: "Concentration, up to 1 minute",
+  description: `
+    <div>
+      <p>You project a phantasmal image of a creature's worst fears. <b>Each creature in a 30-foot cone</b> must succeed on a <b>Wisdom saving throw</b> or drop whatever it is holding and <b>become frightened</b> for the duration.</p>
+      <p>While frightened by this spell, a creature must <b>take the Dash action</b> and move away from you by the safest available route on each of its turns, unless there is nowhere to move. If the creature <b>ends its turn</b> in a location where it <b>doesn't have line of sight to you</b>, the creature can make a <b>Wisdom saving throw.</b> On a successful save, the spell ends for that creature.</p>
+    </div>`
 }];
 
 const characterAbilities = [{
@@ -459,6 +482,10 @@ const characterAbilities = [{
   spellList: [1, 2, 3, 4, 5, 101, 102, 103, 201, 202, 301, 302]
 }, {
   characterId: 2,
+  featureList: [1, 2, 3, 4, 5, 6, 7, 13],
+  spellList: [1, 2, 3, 4, 5, 101, 102, 103, 201, 202, 301, 302, 305]
+}, {
+  characterId: 3,
   featureList: [8, 9, 10, 11, 12],
   spellList: [2, 6, 7, 8, 9, 10, 11, 104, 105, 106, 107, 108, 109, 203, 204, 303, 304]
 }];
