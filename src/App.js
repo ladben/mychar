@@ -10,8 +10,6 @@ function App() {
   let defaultSelectedChar = {id: 1, name: "Elenor"};
   const lsSelectedChar = window.localStorage.getItem('_selectedChar');
 
-  console.log('debug');
-
   if (lsSelectedChar) {
     defaultSelectedChar = JSON.parse(lsSelectedChar);
   }
