@@ -7,11 +7,9 @@ import Navigation from './Navigation.js';
 import FeatureItem from './FeatureItem';
 import SpellItem from './SpellItem';
 
-function Body(props) {
+function Body({selectedChar}) {
   register();
   const swiperElRef = useRef(null);
-
-  const {characterAbilities} = props;
 
   const [selectedAbility, setSelectedAbility] = useState('features');
   const [concentration, setConcentraton] = useState({active: false, spellId: 0});
@@ -41,24 +39,24 @@ function Body(props) {
   }, []);
 
   useEffect(() => {
-    fetchSpellList();
-    fetchFeatureList();
-  }, []);
+    fetchSpellList(selectedChar.id);
+    fetchFeatureList(selectedChar.id);
+  }, [selectedChar.id]);
 
-  async function fetchSpellList() {
+  async function fetchSpellList(characterId) {
     const { data } = await supabase
     .from('characterHasSpell')
     .select('spells!inner(id, name, level, castingTime, range, duration, description)')
-    .eq('characterId', characterAbilities.characterId);
+    .eq('characterId', characterId);
 
     setSpellList(data.map(row => row.spells));
   }
 
-  async function fetchFeatureList() {
+  async function fetchFeatureList(characterId) {
     const { data } = await supabase
     .from('characterHasFeature')
     .select('features!inner(id, name, description)')
-    .eq('characterId', characterAbilities.characterId);
+    .eq('characterId', characterId);
 
     setFeatureList(data.map(row => row.features));
   }
