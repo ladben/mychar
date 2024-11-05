@@ -1,6 +1,7 @@
 import './Body.css';
 import { useRef, useState, useEffect } from 'react';
 import { register } from 'swiper/element/bundle';
+import { supabase } from '../../client';
 
 import Navigation from './Navigation.js';
 import FeatureItem from './FeatureItem';
@@ -10,10 +11,12 @@ function Body(props) {
   register();
   const swiperElRef = useRef(null);
 
-  const {selectedChar, characterAbilities} = props;
+  const {characterAbilities} = props;
 
   const [selectedAbility, setSelectedAbility] = useState('features');
   const [concentration, setConcentraton] = useState({active: false, spellId: 0});
+  const [spellList, setSpellList] = useState([]);
+  const [featureList, setFeatureList] = useState([]);
 
   useEffect(() => {
     if (selectedAbility === 'features') {
@@ -37,15 +40,28 @@ function Body(props) {
     });
   }, []);
 
-  const selectedCharId = selectedChar.id;
-  let featureList = [];
-  let spellList = [];
-  characterAbilities.forEach(characterAbility => {
-    if (characterAbility.characterId === selectedCharId) {
-      featureList = [...characterAbility.featureList];
-      spellList = [...characterAbility.spellList];
-    }
-  });
+  useEffect(() => {
+    fetchSpellList();
+    fetchFeatureList();
+  }, []);
+
+  async function fetchSpellList() {
+    const { data } = await supabase
+    .from('characterHasSpell')
+    .select('spells!inner(id, name, level, castingTime, range, duration, description)')
+    .eq('characterId', characterAbilities.characterId);
+
+    setSpellList(data.map(row => row.spells));
+  }
+
+  async function fetchFeatureList() {
+    const { data } = await supabase
+    .from('characterHasFeature')
+    .select('features!inner(id, name, description)')
+    .eq('characterId', characterAbilities.characterId);
+
+    setFeatureList(data.map(row => row.features));
+  }
 
   return (
     <div className='body-wrapper'>
@@ -59,12 +75,12 @@ function Body(props) {
           threshold="10">
           <swiper-slide>
             <div className='ability-wrapper features-wrapper'>
-              {featureList.map((feature, i) => <FeatureItem key={"feature-" + i} featureId={feature}/>)}
+              {featureList.map((feature, i) => <FeatureItem key={"feature-" + i} feature={feature}/>)}
             </div>
           </swiper-slide>
           <swiper-slide>
           <div className='ability-wrapper spells-wrapper'>
-            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spellId={spell} concentration={{...concentration}} updateConcentration={setConcentraton}/>)}
+            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton}/>)}
           </div>
           </swiper-slide>
         </swiper-container>

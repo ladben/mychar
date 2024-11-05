@@ -3,16 +3,10 @@ import { spells } from '../../sources.js';
 
 const parse = require('html-react-parser');
 
-function SpellItem(props) {
-  let activeSpell = {};
-  spells.forEach(spell => {
-    if (spell.id === props.spellId) {
-      activeSpell = {...spell};
-    }
-  });
+function SpellItem({spell, concentration, updateConcentration}) {
 
   let concentrationSpell = false;
-  if (activeSpell.duration.includes('Concentration')) {
+  if (spell.duration.includes('Concentration')) {
     concentrationSpell = true;
   }
 
@@ -23,18 +17,18 @@ function SpellItem(props) {
   }
 
   const concentrationHandler = () => {
-    if (props.spellId === props.concentration.spellId) {
-      props.updateConcentration({active: false, spellId: 0});
+    if (spell.id === concentration.spellId) {
+      updateConcentration({active: false, spellId: 0});
     }
-    if (props.spellId !== props.concentration.spellId) {
-      props.updateConcentration({active: true, spellId: props.spellId})
+    if (spell.id !== concentration.spellId) {
+      updateConcentration({active: true, spellId: spell.id})
     }
   }
 
   let concentrationDiffClass = ''
-  if (props.concentration.active && concentrationSpell) {
+  if (concentration.active && concentrationSpell) {
     // setting differentiating class if concentration is active
-    if (props.spellId === props.concentration.spellId) {
+    if (spell.id === concentration.spellId) {
       concentrationDiffClass = ' accented';
     } else {
       concentrationDiffClass = ' disabled';
@@ -43,14 +37,14 @@ function SpellItem(props) {
 
   return (
     <div className={'spell-item flex-column-centered' + concentrationDiffClass} onClick={spellItemClickHandler} data-concentration-spell={concentrationSpell}>
-      <div className='spell-name'>{activeSpell.name}</div>
-      <div className='spell-level'>{activeSpell.level}</div>
+      <div className='spell-name'>{spell.name}</div>
+      <div className='spell-level'>{spell.level}</div>
       {concentrationSpell && <div className='concentration-spell-indicator' onClick={concentrationHandler}>C</div>}
       <div className='spell-info'>
-        <div className='spell-casting-time'><b>Casting Time: </b>{activeSpell.castingTime}</div>
-        <div className='spell-range'><b>Range: </b>{activeSpell.range}</div>
-        <div className='spell-duration'><b>Duration: </b>{activeSpell.duration}</div>
-        <div className='spell-description'>{parse(activeSpell.description)}</div>
+        <div className='spell-casting-time'><b>Casting Time: </b>{spell.castingTime}</div>
+        <div className='spell-range'><b>Range: </b>{spell.range}</div>
+        <div className='spell-duration'><b>Duration: </b>{spell.duration}</div>
+        <div className='spell-description'>{parse(spell.description)}</div>
       </div>
     </div>
   );
