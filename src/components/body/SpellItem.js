@@ -1,5 +1,4 @@
 import './SpellItem.css';
-import { spells } from '../../sources.js';
 
 const parse = require('html-react-parser');
 

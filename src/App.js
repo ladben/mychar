@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     fetchCharacters();
-    buildCharacterAbilities()
+    buildCharacterAbilities();
   }, []);
 
   async function fetchCharacters() {
