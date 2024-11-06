@@ -15,7 +15,7 @@ function CharChooser(props) {
       <div className='chosen-character' onClick={toggleCharacterChooser}>{selectedChar.name}</div>
       <div className='character-list-wrapper' onClick={toggleCharacterChooser}>
         <ul className='character-list flex-column-centered'>
-          {characters.map((character, i) => <li key={"character-" + i} onClick={() => {updateSelectedCharHandler(characters[i].id, characters[i].name)}}>{character.name}</li>)}
+          {characters.map((character, i) => <li key={"character-" + i} onClick={() => {updateSelectedCharHandler(characters[i])}}>{character.name}</li>)}
           <li className='close-character-chooser'>
             <div className='arrow-container'>
               <div className='arrow-up'></div>

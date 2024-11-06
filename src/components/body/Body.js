@@ -78,7 +78,7 @@ function Body({selectedChar}) {
           </swiper-slide>
           <swiper-slide>
           <div className='ability-wrapper spells-wrapper'>
-            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton}/>)}
+            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton} character={selectedChar}/>)}
           </div>
           </swiper-slide>
         </swiper-container>

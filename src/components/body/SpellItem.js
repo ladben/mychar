@@ -1,8 +1,9 @@
 import './SpellItem.css';
+import { processText } from '../../functions/dynamicContentParser';
 
 const parse = require('html-react-parser');
 
-function SpellItem({spell, concentration, updateConcentration}) {
+function SpellItem({spell, concentration, updateConcentration, character}) {
 
   let concentrationSpell = false;
   if (spell.duration.includes('Concentration')) {
@@ -43,7 +44,7 @@ function SpellItem({spell, concentration, updateConcentration}) {
         <div className='spell-casting-time'><b>Casting Time: </b>{spell.castingTime}</div>
         <div className='spell-range'><b>Range: </b>{spell.range}</div>
         <div className='spell-duration'><b>Duration: </b>{spell.duration}</div>
-        <div className='spell-description'>{parse(spell.description)}</div>
+        <div className='spell-description'>{parse(processText(spell.description, character))}</div>
       </div>
     </div>
   );
