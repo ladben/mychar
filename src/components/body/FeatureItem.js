@@ -1,8 +1,9 @@
 import './FeatureItem.css';
+import { processText } from '../../functions/dynamicContentParser';
 
 const parse = require('html-react-parser');
 
-function FeatureItem({feature}) {
+function FeatureItem({feature, character}) {
 
   const featureItemClickHandler = (e) => {
     e.target.closest('.feature-item').classList.toggle('active');
@@ -13,7 +14,7 @@ function FeatureItem({feature}) {
   return (
     <div className='feature-item flex-column-centered' onClick={featureItemClickHandler}>
       <div className='feature-name'>{feature.name}</div>
-      <div className='feature-description'>{parse(feature.description)}</div>
+      <div className='feature-description'>{parse(processText(feature.description, character))}</div>
     </div>
   );
 }

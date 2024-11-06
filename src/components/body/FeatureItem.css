@@ -34,14 +34,26 @@
   display: block;
 }
 
-.feature-description p {
+.feature-description p,
+.feature-description ul {
   margin: 10px 0;
 }
 
-.feature-description p b {
+.feature-description ul {
+  padding-left: 16px;
+}
+
+.feature-description ul li {
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+
+.feature-description p b,
+.feature-description li b {
   color: var(--accent);
 }
 
-.feature-description p i {
+.feature-description p i,
+.feature-description li i {
   font-size: 14px;
 }

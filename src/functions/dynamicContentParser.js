@@ -1,7 +1,7 @@
 function parseExpression (content, character, array = false) {
     // expression: {druid_lvl} le %5% '1d8'
     const operatorRegex = /{[^}]*}|%[^%]*%|'[^']*'/g;
-    const operator = content.replace(operatorRegex, '').trim();
+    const operator = content.replace(operatorRegex, '').trim().split(' ')[0];
 
     const expressionRegex = /{([^}]+)}/g;
     const expressionMatches = content.match(expressionRegex) || [];
@@ -33,26 +33,48 @@ function parseExpression (content, character, array = false) {
         return character[expressions[0]]
     }
 
-    // if content is only expression, operator and constant
+    // if content is only expression, operator and/or constant
     if (operator && expressions.length && constants.length && !values.length) {
         if (array) {
             return null;
         }
 
-        const exp_value = character[expressions[0]];
-        const const_value = parseInt(constants[0]);
+        const exp_values = expressions.map(expression => character[expression]);
+        const const_values = constants.map(constant=> parseInt(constant));
 
         if (operator === '+') {
-            return exp_value + const_value;
+            return exp_values.reduce((acc, curr) => acc + curr) + const_values.reduce((acc, curr) => acc + curr);
         }
         if (operator === '-') {
-            return exp_value - const_value;
+            return exp_values.reduce((acc, curr) => acc - curr) - const_values.reduce((acc, curr) => acc - curr);
         }
         if (operator === '*') {
-            return exp_value * const_value;
+            return exp_values.reduce((acc, curr) => acc * curr) * const_values.reduce((acc, curr) => acc * curr);
         }
         if (operator === '/') {
-            return exp_value / const_value;
+            return Math.floor(exp_values.reduce((acc, curr) => acc / curr) / const_values.reduce((acc, curr) => acc / curr));
+        }
+    }
+
+    // if content is only expression and operator
+    if (operator && expressions.length && !constants.length && !values.length) {
+        if (array) {
+            return null;
+        }
+
+        const exp_values = expressions.map(expression => character[expression]);
+
+        if (operator === '+') {
+            return exp_values.reduce((acc, curr) => acc + curr);
+        }
+        if (operator === '-') {
+            return exp_values.reduce((acc, curr) => acc - curr);
+        }
+        if (operator === '*') {
+            return exp_values.reduce((acc, curr) => acc * curr);
+        }
+        if (operator === '/') {
+            return Math.floor(exp_values.reduce((acc, curr) => acc / curr));
         }
     }
 

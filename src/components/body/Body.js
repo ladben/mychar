@@ -73,12 +73,12 @@ function Body({selectedChar}) {
           threshold="10">
           <swiper-slide>
             <div className='ability-wrapper features-wrapper'>
-              {featureList.map((feature, i) => <FeatureItem key={"feature-" + i} feature={feature}/>)}
+              {featureList.map((feature, i) => <FeatureItem key={"feature-" + i} feature={feature} character={selectedChar} />)}
             </div>
           </swiper-slide>
           <swiper-slide>
           <div className='ability-wrapper spells-wrapper'>
-            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton} character={selectedChar}/>)}
+            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton} character={selectedChar} />)}
           </div>
           </swiper-slide>
         </swiper-container>
