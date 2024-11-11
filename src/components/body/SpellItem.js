@@ -3,7 +3,7 @@ import { processText } from '../../functions/dynamicContentParser';
 
 const parse = require('html-react-parser');
 
-function SpellItem({spell, concentration, updateConcentration, character}) {
+function SpellItem({spell, concentration, updateConcentration, character, activeSpellFilter}) {
 
   let concentrationSpell = false;
   if (spell.duration.includes('Concentration')) {
@@ -33,6 +33,15 @@ function SpellItem({spell, concentration, updateConcentration, character}) {
     } else {
       concentrationDiffClass = ' disabled';
     }
+  }
+
+  const alwaysAvailable = spell.prepared === null;
+  const prepared = spell.prepared === true;
+
+  const isActive = activeSpellFilter === 'prepared' ? alwaysAvailable || prepared : activeSpellFilter === 'selectable' ? !alwaysAvailable : false;
+
+  if (!isActive) {
+    return <></>;
   }
 
   return (

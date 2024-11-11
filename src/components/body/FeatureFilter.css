@@ -1,0 +1,19 @@
+.ability-filter-wrapper {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+}
+
+.ability-filter {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 15px;
+}
+
+.ability-filter.active {
+  color: var(--dark);
+  border-color: var(--accent);
+  background: var(--accent);
+}

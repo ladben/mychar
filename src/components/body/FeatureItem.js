@@ -3,12 +3,18 @@ import { processText } from '../../functions/dynamicContentParser';
 
 const parse = require('html-react-parser');
 
-function FeatureItem({feature, character}) {
+function FeatureItem({feature, character, activeFeatureFilters}) {
 
   const featureItemClickHandler = (e) => {
     e.target.closest('.feature-item').classList.toggle('active');
     const topPosition = e.target.closest('.feature-item').offsetTop - 10;
     window.scrollTo({top: topPosition, left: 0, behavior: 'smooth'});
+  }
+
+  const isActive = activeFeatureFilters[feature.source];
+
+  if (!isActive) {
+    return <></>;
   }
 
   return (

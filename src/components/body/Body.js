@@ -6,6 +6,8 @@ import { supabase } from '../../client';
 import Navigation from './Navigation.js';
 import FeatureItem from './FeatureItem';
 import SpellItem from './SpellItem';
+import FeatureFilter from './FeatureFilter.js';
+import SpellFilter from './SpellFilter.js';
 
 function Body({selectedChar}) {
   register();
@@ -15,6 +17,8 @@ function Body({selectedChar}) {
   const [concentration, setConcentraton] = useState({active: false, spellId: 0});
   const [spellList, setSpellList] = useState([]);
   const [featureList, setFeatureList] = useState([]);
+  const [activeFeatureFilters, setActiveFeatureFilters] = useState({race: true, class: true, background: true});
+  const [activeSpellFilter, setActiveSpellFilter] = useState('prepared');
 
   useEffect(() => {
     if (selectedAbility === 'features') {
@@ -46,19 +50,43 @@ function Body({selectedChar}) {
   async function fetchSpellList(characterId) {
     const { data } = await supabase
     .from('characterHasSpell')
-    .select('spells!inner(id, name, level, castingTime, range, duration, description)')
+    .select('spells!inner(id, name, level, castingTime, range, duration, description, prepared)')
     .eq('characterId', characterId);
 
-    setSpellList(data.map(row => row.spells));
+    const spellData = data.map(row => row.spells).sort((a, b) => {
+      const levelA = a.level;
+      const levelB = b.level;
+
+      // Place "cantrip" first
+      if (levelA === 'cantrip') return -1;
+      if (levelB === 'cantrip') return 1;
+
+      // Extract the number part from levels like "1st-level", "2nd-level", etc.
+      const numA = parseInt(levelA);
+      const numB = parseInt(levelB);
+
+      return numA - numB;
+    });
+
+    const cantripRows = spellData.filter(row => row.source === 'cantrip');
+    const otherRows = spellData.filter(row => row.source !== 'cantrip');
+
+    setSpellList([...cantripRows, ...otherRows]);
   }
 
   async function fetchFeatureList(characterId) {
     const { data } = await supabase
     .from('characterHasFeature')
-    .select('features!inner(id, name, description)')
+    .select('features!inner(id, name, description, source)')
     .eq('characterId', characterId);
 
-    setFeatureList(data.map(row => row.features));
+    const order = ['race', 'class', 'background'];
+
+    const orderedData = data.map(row => row.features).sort((a, b) => {
+      return order.indexOf(a.source) - order.indexOf(b.source);
+    });
+
+    setFeatureList(orderedData);
   }
 
   return (
@@ -72,13 +100,15 @@ function Body({selectedChar}) {
           pagination="false"
           threshold="10">
           <swiper-slide>
+            <FeatureFilter activeFeatureFilters={activeFeatureFilters} setActiveFeatureFilters={setActiveFeatureFilters}/>
             <div className='ability-wrapper features-wrapper'>
-              {featureList.map((feature, i) => <FeatureItem key={"feature-" + i} feature={feature} character={selectedChar} />)}
+              {featureList.map((feature, i) => <FeatureItem key={"feature-" + i} feature={feature} character={selectedChar} activeFeatureFilters={activeFeatureFilters}/>)}
             </div>
           </swiper-slide>
           <swiper-slide>
+            <SpellFilter activeSpellFilter={activeSpellFilter} setActiveSpellFilter={setActiveSpellFilter}/>
           <div className='ability-wrapper spells-wrapper'>
-            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton} character={selectedChar} />)}
+            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton} character={selectedChar} activeSpellFilter={activeSpellFilter}/>)}
           </div>
           </swiper-slide>
         </swiper-container>
