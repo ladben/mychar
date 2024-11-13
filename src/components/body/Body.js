@@ -54,7 +54,7 @@ function Body({selectedChar}) {
   }, [selectedChar.id]);
 
   async function fetchSpellList(characterId) {
-    const { data, error } = await supabase
+    const { data } = await supabase
     .from('characterHasSpell')
     .select('spells!inner(id, name, level, castingTime, range, duration, description, prepared)')
     .eq('characterId', characterId);
