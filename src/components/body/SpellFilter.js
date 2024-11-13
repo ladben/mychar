@@ -1,6 +1,12 @@
 import './SpellFilter.css';
 
-const SpellFilter = ({activeSpellFilter, setActiveSpellFilter}) => {
+const SpellFilter = ({
+  activeSpellFilter,
+  setActiveSpellFilter,
+  spellsPrepared,
+  spellsToPrepare,
+  extraSpells
+}) => {
 
   const filterClickHandler = (e) => {
     const type = e.target.dataset.type
@@ -15,14 +21,14 @@ const SpellFilter = ({activeSpellFilter, setActiveSpellFilter}) => {
         data-type='prepared'
         onClick={filterClickHandler}
       >
-        Prepared
+        Prepared {'(' + spellsPrepared} + {extraSpells + ')'}
       </div>
       <div
         className={`spell-filter ${activeSpellFilter === 'selectable' && 'active'}`}
         data-type='selectable'
         onClick={filterClickHandler}
       >
-        Selectable
+        Selectable {'(' + spellsPrepared} / {spellsToPrepare + ')'}
       </div>
     </div>
   );

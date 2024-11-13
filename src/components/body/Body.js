@@ -16,9 +16,15 @@ function Body({selectedChar}) {
   const [selectedAbility, setSelectedAbility] = useState('features');
   const [concentration, setConcentraton] = useState({active: false, spellId: 0});
   const [spellList, setSpellList] = useState([]);
+  const [spellsPrepared, setSpellsPrepared] = useState(0);
   const [featureList, setFeatureList] = useState([]);
   const [activeFeatureFilters, setActiveFeatureFilters] = useState({race: true, class: true, background: true});
   const [activeSpellFilter, setActiveSpellFilter] = useState('prepared');
+
+  const spellsToPrepare = useRef(selectedChar.druid_lvl + selectedChar.wisdom_mod);
+  const extraSpells = useRef(0);
+
+  window.supabase = supabase;
 
   useEffect(() => {
     if (selectedAbility === 'features') {
@@ -48,7 +54,7 @@ function Body({selectedChar}) {
   }, [selectedChar.id]);
 
   async function fetchSpellList(characterId) {
-    const { data } = await supabase
+    const { data, error } = await supabase
     .from('characterHasSpell')
     .select('spells!inner(id, name, level, castingTime, range, duration, description, prepared)')
     .eq('characterId', characterId);
@@ -70,8 +76,18 @@ function Body({selectedChar}) {
 
     const cantripRows = spellData.filter(row => row.source === 'cantrip');
     const otherRows = spellData.filter(row => row.source !== 'cantrip');
+    
+    const orderedSpellList = [...cantripRows, ...otherRows];
+    const preparedSpellsNum = orderedSpellList.filter(spell => spell.prepared === true).length;
+    const extraSpellsNum = orderedSpellList.filter(spell => spell.prepared === null).length;
 
-    setSpellList([...cantripRows, ...otherRows]);
+    setSpellList(orderedSpellList);
+    setSpellsPrepared(preparedSpellsNum);
+    extraSpells.current = extraSpellsNum;
+  }
+
+  const handleSpellUpdate = () => {
+    fetchSpellList(selectedChar.id);
   }
 
   async function fetchFeatureList(characterId) {
@@ -106,9 +122,29 @@ function Body({selectedChar}) {
             </div>
           </swiper-slide>
           <swiper-slide>
-            <SpellFilter activeSpellFilter={activeSpellFilter} setActiveSpellFilter={setActiveSpellFilter}/>
+            <SpellFilter
+              activeSpellFilter={activeSpellFilter}
+              setActiveSpellFilter={setActiveSpellFilter}
+              spellsPrepared={spellsPrepared}
+              spellsToPrepare={spellsToPrepare.current}
+              extraSpells={extraSpells.current}
+            />
           <div className='ability-wrapper spells-wrapper'>
-            {spellList.map((spell, i) => <SpellItem key={"spell-" + i} spell={spell} concentration={{...concentration}} updateConcentration={setConcentraton} character={selectedChar} activeSpellFilter={activeSpellFilter}/>)}
+            {spellList.map((spell, i) => {
+              return (
+                <SpellItem
+                  key={"spell-" + i}
+                  spell={spell}
+                  concentration={{...concentration}}
+                  updateConcentration={setConcentraton}
+                  character={selectedChar}
+                  activeSpellFilter={activeSpellFilter}
+                  spellsToPrepare={spellsToPrepare.current}
+                  spellsPrepared={spellsPrepared}
+                  onUpdate={handleSpellUpdate}
+                />
+              );
+            })}
           </div>
           </swiper-slide>
         </swiper-container>

@@ -49,6 +49,10 @@
   font-size: 14px;
 }
 
+.spell-item.prepared .spell-level {
+  background: var(--green);
+}
+
 .concentration-spell-indicator {
   left: unset;
   right: 0;

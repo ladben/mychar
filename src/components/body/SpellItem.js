@@ -1,9 +1,19 @@
 import './SpellItem.css';
 import { processText } from '../../functions/dynamicContentParser';
+import { supabase } from '../../client';
 
 const parse = require('html-react-parser');
 
-function SpellItem({spell, concentration, updateConcentration, character, activeSpellFilter}) {
+function SpellItem({
+  spell,
+  concentration,
+  updateConcentration,
+  character,
+  activeSpellFilter,
+  spellsToPrepare,
+  spellsPrepared,
+  onUpdate
+}) {
 
   let concentrationSpell = false;
   if (spell.duration.includes('Concentration')) {
@@ -11,9 +21,11 @@ function SpellItem({spell, concentration, updateConcentration, character, active
   }
 
   const spellItemClickHandler = (e) => {
-    e.target.closest('.spell-item').classList.toggle('active');
-    const topPosition = e.target.closest('.spell-item').offsetTop - 10;
-    window.scrollTo({top: topPosition, left: 0, behavior: 'smooth'});
+    if (activeSpellFilter === 'prepared' || !e.target.classList.contains('spell-level')) {
+      e.target.closest('.spell-item').classList.toggle('active');
+      const topPosition = e.target.closest('.spell-item').offsetTop - 10;
+      window.scrollTo({top: topPosition, left: 0, behavior: 'smooth'});
+    }
   }
 
   const concentrationHandler = () => {
@@ -22,6 +34,24 @@ function SpellItem({spell, concentration, updateConcentration, character, active
     }
     if (spell.id !== concentration.spellId) {
       updateConcentration({active: true, spellId: spell.id})
+    }
+  }
+
+  async function prepareHandler(spellId, prevPreparedValue) {
+    const prepareMode = activeSpellFilter === 'selectable';
+    if (prepareMode) {
+      const wantsToRemove = prevPreparedValue === true;
+      const canAdd = spellsPrepared < spellsToPrepare;
+      if (wantsToRemove || canAdd) {
+        const { error } = await supabase
+        .from('spells')
+        .update({ prepared: !prevPreparedValue })
+        .eq('id', spellId);
+    
+        if (!error) {
+          onUpdate();
+        }
+      }
     }
   }
 
@@ -45,9 +75,19 @@ function SpellItem({spell, concentration, updateConcentration, character, active
   }
 
   return (
-    <div className={'spell-item flex-column-centered' + concentrationDiffClass} onClick={spellItemClickHandler} data-concentration-spell={concentrationSpell}>
+    <div
+      className={
+        'spell-item flex-column-centered'
+        + concentrationDiffClass
+        + (activeSpellFilter === 'selectable' && spell.prepared === true ? ' prepared' : '')
+      }
+      onClick={spellItemClickHandler} data-concentration-spell={concentrationSpell}
+    >
       <div className='spell-name'>{spell.name}</div>
-      <div className='spell-level'>{spell.level}</div>
+      <div
+        className='spell-level'
+        onClick={() => prepareHandler(spell.id, spell.prepared)}
+      >{spell.level}</div>
       {concentrationSpell && <div className='concentration-spell-indicator' onClick={concentrationHandler}>C</div>}
       <div className='spell-info'>
         <div className='spell-casting-time'><b>Casting Time: </b>{spell.castingTime}</div>
