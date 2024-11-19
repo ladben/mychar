@@ -88,7 +88,7 @@ function SpellItem({
         className='spell-level'
         onClick={() => prepareHandler(spell.id, spell.prepared)}
       >{spell.level}</div>
-      {concentrationSpell && <div className='concentration-spell-indicator' onClick={concentrationHandler}>C</div>}
+      {concentrationSpell && activeSpellFilter === 'prepared' && <div className='concentration-spell-indicator' onClick={concentrationHandler}>C</div>}
       <div className='spell-info'>
         <div className='spell-casting-time'><b>Casting Time: </b>{spell.castingTime}</div>
         <div className='spell-range'><b>Range: </b>{spell.range}</div>

@@ -30,6 +30,13 @@
   text-align: center;
   max-width: 100%;
   word-wrap: break-word;
+  max-height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .spell-item.active .spell-name {

@@ -13,18 +13,28 @@ function Body({selectedChar}) {
   register();
   const swiperElRef = useRef(null);
 
-  const [selectedAbility, setSelectedAbility] = useState('features');
+  const [selectedAbility, setSelectedAbility] = useState(window.localStorage.getItem('_selected-ability') || 'features');
   const [concentration, setConcentraton] = useState({active: false, spellId: 0});
   const [spellList, setSpellList] = useState([]);
   const [spellsPrepared, setSpellsPrepared] = useState(0);
   const [featureList, setFeatureList] = useState([]);
   const [activeFeatureFilters, setActiveFeatureFilters] = useState({race: true, class: true, background: true});
-  const [activeSpellFilter, setActiveSpellFilter] = useState('prepared');
+  const [activeSpellFilter, setActiveSpellFilter] = useState(window.localStorage.getItem('_active-spell-filter') || 'prepared');
 
   const spellsToPrepare = useRef(selectedChar.druid_lvl + selectedChar.wisdom_mod);
   const extraSpells = useRef(0);
 
   window.supabase = supabase;
+
+  const setSelectedAbilityFunction = (ability) => {
+    setSelectedAbility(ability);
+    window.localStorage.setItem('_selected-ability', ability);
+  }
+
+  const setActiveSpellFilterFunction = (spellFilter) => {
+    setActiveSpellFilter(spellFilter);
+    window.localStorage.setItem('_active-spell-filter', spellFilter);
+  }
 
   useEffect(() => {
     if (selectedAbility === 'features') {
@@ -39,11 +49,11 @@ function Body({selectedChar}) {
   useEffect(() => {
     swiperElRef.current.addEventListener('slidechange', (e) => {
       if (e.detail[0].activeIndex === 0) {
-        setSelectedAbility('features');
+        setSelectedAbilityFunction('features');
       }
 
       if (e.detail[0].activeIndex === 1) {
-        setSelectedAbility('spells');
+        setSelectedAbilityFunction('spells');
       }
     });
   }, []);
@@ -107,7 +117,7 @@ function Body({selectedChar}) {
 
   return (
     <div className='body-wrapper'>
-      <Navigation selectedAbility={selectedAbility} updateSelectedAbilityHandler={setSelectedAbility} concentration={concentration.active}/>
+      <Navigation selectedAbility={selectedAbility} updateSelectedAbilityHandler={setSelectedAbilityFunction} concentration={concentration.active}/>
       <div className='swiper-wrapper-div'>
         <swiper-container
           ref={swiperElRef}
@@ -124,7 +134,7 @@ function Body({selectedChar}) {
           <swiper-slide>
             <SpellFilter
               activeSpellFilter={activeSpellFilter}
-              setActiveSpellFilter={setActiveSpellFilter}
+              setActiveSpellFilter={setActiveSpellFilterFunction}
               spellsPrepared={spellsPrepared}
               spellsToPrepare={spellsToPrepare.current}
               extraSpells={extraSpells.current}
