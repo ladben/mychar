@@ -133,6 +133,7 @@ function Body({selectedChar}) {
           </swiper-slide>
           <swiper-slide>
             <SpellFilter
+              selectedAbility={selectedAbility}
               activeSpellFilter={activeSpellFilter}
               setActiveSpellFilter={setActiveSpellFilterFunction}
               spellsPrepared={spellsPrepared}
