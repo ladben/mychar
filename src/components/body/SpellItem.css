@@ -127,3 +127,9 @@
 .spell-description li i {
   font-size: 14px;
 }
+
+.spell-description a,
+.spell-description a b {
+  text-decoration: none;
+  color: var(--link);
+}
