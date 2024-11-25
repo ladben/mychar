@@ -29,11 +29,13 @@ function SpellItem({
   }
 
   const concentrationHandler = () => {
-    if (spell.id === concentration.spellId) {
-      updateConcentration({active: false, spellId: 0});
-    }
-    if (spell.id !== concentration.spellId) {
-      updateConcentration({active: true, spellId: spell.id})
+    if (activeSpellFilter === 'prepared') {
+      if (spell.id === concentration.spellId) {
+        updateConcentration({active: false, spellId: 0});
+      }
+      if (spell.id !== concentration.spellId) {
+        updateConcentration({active: true, spellId: spell.id})
+      }
     }
   }
 
@@ -88,7 +90,7 @@ function SpellItem({
         className='spell-level'
         onClick={() => prepareHandler(spell.id, spell.prepared)}
       >{spell.level}</div>
-      {concentrationSpell && activeSpellFilter === 'prepared' && <div className='concentration-spell-indicator' onClick={concentrationHandler}>C</div>}
+      {concentrationSpell && <div className={`concentration-spell-indicator ${activeSpellFilter === 'prepared' ? 'prepared-view' : ''}`} onClick={concentrationHandler}>C</div>}
       <div className='spell-info'>
         <div className='spell-casting-time'><b>Casting Time: </b>{spell.castingTime}</div>
         <div className='spell-range'><b>Range: </b>{spell.range}</div>
