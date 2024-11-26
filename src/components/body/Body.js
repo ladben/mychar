@@ -20,6 +20,7 @@ function Body({selectedChar}) {
   const [featureList, setFeatureList] = useState([]);
   const [activeFeatureFilters, setActiveFeatureFilters] = useState({race: true, class: true, background: true});
   const [activeSpellFilter, setActiveSpellFilter] = useState(window.localStorage.getItem('_active-spell-filter') || 'prepared');
+  const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({utility: true, combat: true, support: true});
 
   const spellsToPrepare = useRef(selectedChar.druid_lvl + selectedChar.wisdom_mod);
   const extraSpells = useRef(0);
@@ -66,7 +67,7 @@ function Body({selectedChar}) {
   async function fetchSpellList(characterId) {
     const { data } = await supabase
     .from('characterHasSpell')
-    .select('spells!inner(id, name, level, castingTime, range, duration, description, prepared)')
+    .select('spells!inner(id, name, level, castingTime, range, duration, description, prepared, tag_utility, tag_combat, tag_support)')
     .eq('characterId', characterId);
 
     const spellData = data.map(row => row.spells).sort((a, b) => {
@@ -139,6 +140,8 @@ function Body({selectedChar}) {
               spellsPrepared={spellsPrepared}
               spellsToPrepare={spellsToPrepare.current}
               extraSpells={extraSpells.current}
+              activeSpellTagFilters={activeSpellTagFilters}
+              setActiveSpellTagFilters={setActiveSpellTagFilters}
             />
           <div className='ability-wrapper spells-wrapper'>
             {spellList.map((spell, i) => {

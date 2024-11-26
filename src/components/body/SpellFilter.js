@@ -8,7 +8,9 @@ const SpellFilter = ({
   setActiveSpellFilter,
   spellsPrepared,
   spellsToPrepare,
-  extraSpells
+  extraSpells,
+  activeSpellTagFilters,
+  setActiveSpellTagFilters
 }) => {
 
   const spellFilterRef = useRef(null);
@@ -56,6 +58,17 @@ const SpellFilter = ({
     setActiveSpellFilter(type);
   }
 
+  const tagFilterClickHandler = (e) => {
+    const type = e.target.dataset.type
+    
+    setActiveSpellTagFilters((prevState) => {
+      const newState = {...prevState};
+      newState[type] = !prevState[type];
+
+      return newState;
+    });
+  }
+
   return (
     <>
       <StickySpellFilterComponent>
@@ -90,6 +103,29 @@ const SpellFilter = ({
           onClick={filterClickHandler}
         >
           Selectable {'(' + spellsPrepared} / {spellsToPrepare + ')'}
+        </div>
+      </div>
+      <div className='spell-tag-filter-wrapper'>
+        <div
+          className={`spell-tag-filter ${activeSpellTagFilters.support && 'active'}`}
+          data-type='support'
+          onClick={tagFilterClickHandler}
+        >
+          Support
+        </div>
+        <div
+          className={`spell-tag-filter ${activeSpellTagFilters.combat && 'active'}`}
+          data-type='combat'
+          onClick={tagFilterClickHandler}
+        >
+          Combat
+        </div>
+        <div
+          className={`spell-tag-filter ${activeSpellTagFilters.utility && 'active'}`}
+          data-type='utility'
+          onClick={tagFilterClickHandler}
+        >
+          Utility
         </div>
       </div>
     </>
