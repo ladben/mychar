@@ -156,6 +156,7 @@ function Body({selectedChar}) {
                   spellsToPrepare={spellsToPrepare.current}
                   spellsPrepared={spellsPrepared}
                   onUpdate={handleSpellUpdate}
+                  activeSpellTagFilters={activeSpellTagFilters}
                 />
               );
             })}

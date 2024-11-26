@@ -12,8 +12,18 @@ function SpellItem({
   activeSpellFilter,
   spellsToPrepare,
   spellsPrepared,
-  onUpdate
+  onUpdate,
+  activeSpellTagFilters
 }) {
+
+  const shouldShowByTagFilter = Object.entries(activeSpellTagFilters).some(([key, value]) => {
+    if (!value)  {
+      return false;
+    }
+
+    const tagKey = `tag_${key}`;
+    return spell[tagKey];
+  });
 
   let concentrationSpell = false;
   if (spell.duration.includes('Concentration')) {
@@ -73,6 +83,10 @@ function SpellItem({
   const isActive = activeSpellFilter === 'prepared' ? alwaysAvailable || prepared : activeSpellFilter === 'selectable' ? !alwaysAvailable : false;
 
   if (!isActive) {
+    return <></>;
+  }
+
+  if (activeSpellFilter === 'selectable' && !shouldShowByTagFilter) {
     return <></>;
   }
 

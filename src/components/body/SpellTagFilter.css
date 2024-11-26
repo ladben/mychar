@@ -1,0 +1,99 @@
+#extra-spell-filter-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 100;
+}
+
+#extra-spell-filter-container i {
+  position: relative;
+  z-index: 100;
+  background: var(--accent);
+  color: var(--dark);
+  box-shadow: 0px 0px 10px 0px rgba(255,255,255,.5);
+  border-radius: 50%;
+}
+
+i#extra-spell-filter-close-btn::before {
+  margin-left: 2px;
+}
+
+.extra-spell-filter-wrapper i#extra-spell-filter-open-btn {
+  font-size: 30px;
+  padding: 15px;
+  width: 30px;
+  height: 30px;
+}
+
+.extra-spell-filter-wrapper.open i#extra-spell-filter-close-btn {
+  font-size: 40px;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.extra-spell-filter-wrapper.open i#extra-spell-filter-open-btn,
+.extra-spell-filter-wrapper i#extra-spell-filter-close-btn {
+  font-size: 0px;
+  padding: 0px;
+  width: 0px;
+  height: 0px;
+}
+
+.extra-spell-filter-panel {
+  position: absolute;
+  width: 60dvw;
+  height: 100dvh;
+  background: var(--grey);
+  bottom: -10px;
+  right: -10px;
+  transform: translateX(100%);
+  transition: all .2s ease-in;
+}
+
+.extra-spell-filter-wrapper.open .extra-spell-filter-panel {
+  transform: translateX(0px);
+}
+
+.extra-spell-filter-panel .extra-spell-filter-group {
+  padding: 30px;
+}
+
+.extra-spell-filter-panel .extra-spell-filter-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.extra-spell-filter-panel .extra-spell-filter-btn {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 50px;
+  text-align: center;
+  border: 1px solid var(--light);
+  background: transparent;
+}
+
+.extra-spell-filter-panel .extra-spell-filter-btn.active {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--dark);
+}
+
+.extra-spell-filter-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: var(--dark);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.extra-spell-filter-wrapper.open .extra-spell-filter-backdrop {
+  opacity: .8;
+  pointer-events: all;
+}

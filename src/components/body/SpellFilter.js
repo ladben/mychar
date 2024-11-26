@@ -1,6 +1,7 @@
 import './SpellFilter.css';
 import { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import SpellTagFilter from './SpellTagFilter.js';
 
 const SpellFilter = ({
   selectedAbility,
@@ -52,21 +53,21 @@ const SpellFilter = ({
     );
   };
 
+  const ExtraSpellFilterPortalComponent = ({children}) => {
+    const extraSpellFilterPortalRoot = document.getElementById("extra-spell-filter-container");
+
+    return ReactDOM.createPortal(
+      <>
+        {children}
+      </>,
+      extraSpellFilterPortalRoot
+    );
+  };
+
   const filterClickHandler = (e) => {
     const type = e.target.dataset.type
     
     setActiveSpellFilter(type);
-  }
-
-  const tagFilterClickHandler = (e) => {
-    const type = e.target.dataset.type
-    
-    setActiveSpellTagFilters((prevState) => {
-      const newState = {...prevState};
-      newState[type] = !prevState[type];
-
-      return newState;
-    });
   }
 
   return (
@@ -105,29 +106,11 @@ const SpellFilter = ({
           Selectable {'(' + spellsPrepared} / {spellsToPrepare + ')'}
         </div>
       </div>
-      <div className='spell-tag-filter-wrapper'>
-        <div
-          className={`spell-tag-filter ${activeSpellTagFilters.support && 'active'}`}
-          data-type='support'
-          onClick={tagFilterClickHandler}
-        >
-          Support
-        </div>
-        <div
-          className={`spell-tag-filter ${activeSpellTagFilters.combat && 'active'}`}
-          data-type='combat'
-          onClick={tagFilterClickHandler}
-        >
-          Combat
-        </div>
-        <div
-          className={`spell-tag-filter ${activeSpellTagFilters.utility && 'active'}`}
-          data-type='utility'
-          onClick={tagFilterClickHandler}
-        >
-          Utility
-        </div>
-      </div>
+      {selectedAbility === 'spells' && activeSpellFilter === 'selectable' && (
+        <ExtraSpellFilterPortalComponent>
+          <SpellTagFilter activeSpellTagFilters={activeSpellTagFilters} setActiveSpellTagFilters={setActiveSpellTagFilters}/>
+        </ExtraSpellFilterPortalComponent>
+      )}
     </>
   );
 }
