@@ -22,8 +22,9 @@ function Body({selectedChar}) {
   const [activeSpellFilter, setActiveSpellFilter] = useState(window.localStorage.getItem('_active-spell-filter') || 'prepared');
   const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({utility: true, combat: true, support: true});
 
-  const spellsToPrepare = useRef(selectedChar.druid_lvl + selectedChar.wisdom_mod);
+  const spellsToPrepare = useRef(0);
   const extraSpells = useRef(0);
+  spellsToPrepare.current = selectedChar.druid_lvl + selectedChar.wisdom_mod;
 
   window.supabase = supabase;
 
