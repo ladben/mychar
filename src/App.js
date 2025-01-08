@@ -8,12 +8,12 @@ import Body from './components/body/Body.js';
 
 function App() {
   const defaultSelectedChar = {
-    created_at: "2024-11-05T12:11:46.442789+00:00",
-    druid_lvl: 3,
+    // created_at: "2024-11-05T12:11:46.442789+00:00",
+    // druid_lvl: 3,
     id: 1,
-    name: "Elenor",
-    spell_save_dc: 14,
-    wisdom_mod: 4
+    // name: "Elenor",
+    // spell_save_dc: 14,
+    // wisdom_mod: 4
   }
 
   const [selectedChar, setSelectedChar] = useState(defaultSelectedChar);
@@ -55,8 +55,8 @@ function App() {
 
   return (
     <div className='outer-wrapper flex-column-centered'>
-      <Heading selectedChar={{...selectedChar}} characters={[...characters]} updateSelectedCharHandler={updateSelectedChar}/>
-      <Body selectedChar={{...selectedChar}} />
+      <Heading selectedChar={selectedChar} characters={characters} updateSelectedCharHandler={updateSelectedChar}/>
+      <Body selectedChar={selectedChar} />
     </div>
   );
 }
