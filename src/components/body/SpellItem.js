@@ -17,12 +17,17 @@ function SpellItem({
 }) {
 
   const shouldShowByTagFilter = Object.entries(activeSpellTagFilters).some(([key, value]) => {
-    if (!value)  {
+    const typeFilters = activeSpellTagFilters.type;
+
+    // If no filters are active (all are false), return false
+    if (!typeFilters || Object.values(typeFilters).every(value => !value)) {
       return false;
     }
 
-    const tagKey = `tag_${key}`;
-    return spell[tagKey];
+    // Check if any active filter matches the spell's corresponding tag
+    return Object.entries(typeFilters).some(([typeKey, isActive]) => {
+      return isActive && spell[`tag_${typeKey}`];
+    });
   });
 
   let concentrationSpell = false;

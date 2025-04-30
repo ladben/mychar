@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import './SpellTagFilter.css';
 
+import SpellFilterGroup from './SpellFilterGroup/SpellFilterGroup.js';
+
 const SpellTagFilter = ({
   activeSpellTagFilters,
   setActiveSpellTagFilters
@@ -12,18 +14,11 @@ const SpellTagFilter = ({
     const type = e.target.dataset.type
 
     const newRef = {...activeSpellTagFiltersRef.current};
-    newRef[type] = !activeSpellTagFiltersRef.current[type];
+    newRef.type[type] = !activeSpellTagFiltersRef.current.type[type];
 
     activeSpellTagFiltersRef.current = newRef;
 
     e.target.classList.toggle('active');
-    
-    // setActiveSpellTagFilters((prevState) => {
-    //   const newState = {...prevState};
-    //   newState[type] = !prevState[type];
-
-    //   return newState;
-    // });
   }
 
   const filterButtonClickHandler = () => {
@@ -47,9 +42,20 @@ const SpellTagFilter = ({
         filterButtonClickHandler();
         updateFilterState();
       }}></i>
-      <div className='extra-spell-filter-backdrop' onClick={filterButtonClickHandler}></div>
+      <div className='extra-spell-filter-backdrop' onClick={() => {
+        filterButtonClickHandler();
+        updateFilterState();
+      }}></div>
       <div className="extra-spell-filter-panel">
-        <div className='extra-spell-filter-group spell-tag-filters'>
+        <SpellFilterGroup
+          groupName="Spell Types"
+          groupClassName="spell-tag-filters"
+          filterType="tag"
+          options={["Support", "Combat", "Utility"]}
+          activeSpellFilters={activeSpellTagFiltersRef.current.type}
+          filterClickHandler={tagFilterClickHandler}
+        />
+        {/* <div className='extra-spell-filter-group spell-tag-filters'>
           <div className='extra-spell-filter-title'>Spell Types</div>
           <div
             className={`extra-spell-filter-btn spell-tag-filter ${activeSpellTagFiltersRef.current?.support && 'active'}`}
@@ -72,7 +78,7 @@ const SpellTagFilter = ({
           >
             Utility
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

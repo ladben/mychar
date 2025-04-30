@@ -20,7 +20,10 @@ function Body({selectedChar}) {
   const [featureList, setFeatureList] = useState([]);
   const [activeFeatureFilters, setActiveFeatureFilters] = useState({race: true, class: true, background: true});
   const [activeSpellFilter, setActiveSpellFilter] = useState(window.localStorage.getItem('_active-spell-filter') || 'prepared');
-  const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({utility: true, combat: true, support: true});
+  const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({
+    type: {utility: true, combat: true, support: true},
+    level: {all: true}
+  });
 
   const spellsToPrepare = useRef(0);
   const extraSpells = useRef(0);
@@ -116,6 +119,8 @@ function Body({selectedChar}) {
 
     setFeatureList(orderedData);
   }
+
+  console.log(activeSpellTagFilters);
 
   return (
     <div className='body-wrapper'>
