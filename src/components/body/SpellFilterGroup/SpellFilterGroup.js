@@ -6,7 +6,7 @@ const SpellFilterGroup = ({groupName, groupClassName, filterType, options, activ
             <div
                 key={index}
                 className={`extra-spell-filter-btn spell-${filterType}-filter ${activeSpellFilters && activeSpellFilters[option.toLowerCase()] ? 'active' : ''}`}
-                data-type={option.toLowerCase()}
+                {...{[`data-${filterType}`]: option.toLowerCase()}}
                 onClick={filterClickHandler}
             >
                 {option}

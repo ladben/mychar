@@ -16,19 +16,32 @@ function SpellItem({
   activeSpellTagFilters
 }) {
 
-  const shouldShowByTagFilter = Object.entries(activeSpellTagFilters).some(([key, value]) => {
+  const shouldShowByTagFilter = () => {
     const typeFilters = activeSpellTagFilters.type;
+    const levelFilters = activeSpellTagFilters.level;
 
-    // If no filters are active (all are false), return false
+    // If no type filters are active (all are false), return false
     if (!typeFilters || Object.values(typeFilters).every(value => !value)) {
       return false;
     }
 
+    // If no level filters are active (all are false), return false
+    if (!levelFilters || Object.values(levelFilters).every(value => !value)) {
+      return false;
+    }
+
     // Check if any active filter matches the spell's corresponding tag
-    return Object.entries(typeFilters).some(([typeKey, isActive]) => {
+    const showByType = Object.entries(typeFilters).some(([typeKey, isActive]) => {
       return isActive && spell[`tag_${typeKey}`];
     });
-  });
+
+    // Check if any active filter matches the spell's level
+    const showByLevel = Object.entries(levelFilters).some(([levelKey, isActive]) => {
+      return isActive && spell.level === levelKey;
+    });
+
+    return showByType && showByLevel;
+  };
 
   let concentrationSpell = false;
   if (spell.duration.includes('Concentration')) {
@@ -91,7 +104,7 @@ function SpellItem({
     return <></>;
   }
 
-  if (activeSpellFilter === 'selectable' && !shouldShowByTagFilter) {
+  if (activeSpellFilter === 'selectable' && !shouldShowByTagFilter()) {
     return <></>;
   }
 

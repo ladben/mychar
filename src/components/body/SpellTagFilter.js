@@ -21,6 +21,17 @@ const SpellTagFilter = ({
     e.target.classList.toggle('active');
   }
 
+  const levelFilterClickHandler = (e) => {
+    const level = e.target.dataset.level
+
+    const newRef = {...activeSpellTagFiltersRef.current};
+    newRef.level[level] = !activeSpellTagFiltersRef.current.level[level];
+
+    activeSpellTagFiltersRef.current = newRef;
+
+    e.target.classList.toggle('active');
+  }
+
   const filterButtonClickHandler = () => {
     if (filterButtonRef.current) {
       filterButtonRef.current.classList.toggle('open');
@@ -50,35 +61,19 @@ const SpellTagFilter = ({
         <SpellFilterGroup
           groupName="Spell Types"
           groupClassName="spell-tag-filters"
-          filterType="tag"
+          filterType="type"
           options={["Support", "Combat", "Utility"]}
           activeSpellFilters={activeSpellTagFiltersRef.current.type}
           filterClickHandler={tagFilterClickHandler}
         />
-        {/* <div className='extra-spell-filter-group spell-tag-filters'>
-          <div className='extra-spell-filter-title'>Spell Types</div>
-          <div
-            className={`extra-spell-filter-btn spell-tag-filter ${activeSpellTagFiltersRef.current?.support && 'active'}`}
-            data-type='support'
-            onClick={tagFilterClickHandler}
-          >
-            Support
-          </div>
-          <div
-            className={`extra-spell-filter-btn spell-tag-filter ${activeSpellTagFiltersRef.current?.combat && 'active'}`}
-            data-type='combat'
-            onClick={tagFilterClickHandler}
-          >
-            Combat
-          </div>
-          <div
-            className={`extra-spell-filter-btn spell-tag-filter ${activeSpellTagFiltersRef.current?.utility && 'active'}`}
-            data-type='utility'
-            onClick={tagFilterClickHandler}
-          >
-            Utility
-          </div>
-        </div> */}
+        <SpellFilterGroup
+          groupName="Spell Levels"
+          groupClassName="spell-level-filters"
+          filterType="level"
+          options={["1st-level", "2nd-level", "3rd-level"]}
+          activeSpellFilters={activeSpellTagFiltersRef.current.level}
+          filterClickHandler={levelFilterClickHandler}
+        />
       </div>
     </div>
   );

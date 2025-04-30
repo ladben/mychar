@@ -22,7 +22,7 @@ function Body({selectedChar}) {
   const [activeSpellFilter, setActiveSpellFilter] = useState(window.localStorage.getItem('_active-spell-filter') || 'prepared');
   const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({
     type: {utility: true, combat: true, support: true},
-    level: {all: true}
+    level: {'1st-level': true, '2nd-level': true, '3rd-level': true}
   });
 
   const spellsToPrepare = useRef(0);
