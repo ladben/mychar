@@ -37,7 +37,7 @@ function SpellItem({
 
     // Check if any active filter matches the spell's level
     const showByLevel = Object.entries(levelFilters).some(([levelKey, isActive]) => {
-      return isActive && spell.level === levelKey;
+      return isActive && spell.level.includes(levelKey);
     });
 
     return showByType && showByLevel;
