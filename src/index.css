@@ -27,3 +27,7 @@ body {
   color: var(--light);
   font-family: 'Nunito Sans', sans-serif;
 }
+
+body.no-scroll {
+  overflow: hidden;
+}

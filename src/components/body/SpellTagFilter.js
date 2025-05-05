@@ -35,6 +35,7 @@ const SpellTagFilter = ({
   const filterButtonClickHandler = () => {
     if (filterButtonRef.current) {
       filterButtonRef.current.classList.toggle('open');
+      document.body.classList.toggle('no-scroll');
     }
   }
 
@@ -49,31 +50,34 @@ const SpellTagFilter = ({
   return (
     <div className='extra-spell-filter-wrapper' ref={filterButtonRef}>
       <i id="extra-spell-filter-open-btn" className="fa-solid fa-filter" onClick={filterButtonClickHandler}></i>
-      <i id="extra-spell-filter-close-btn" className="fa-solid fa-arrow-right" onClick={() => {
-        filterButtonClickHandler();
-        updateFilterState();
-      }}></i>
       <div className='extra-spell-filter-backdrop' onClick={() => {
         filterButtonClickHandler();
         updateFilterState();
       }}></div>
       <div className="extra-spell-filter-panel">
-        <SpellFilterGroup
-          groupName="Spell Types"
-          groupClassName="spell-tag-filters"
-          filterType="type"
-          options={["Support", "Combat", "Utility"]}
-          activeSpellFilters={activeSpellTagFiltersRef.current.type}
-          filterClickHandler={tagFilterClickHandler}
-        />
-        <SpellFilterGroup
-          groupName="Spell Levels"
-          groupClassName="spell-level-filters"
-          filterType="level"
-          options={["1st-level", "2nd-level", "3rd-level"]}
-          activeSpellFilters={activeSpellTagFiltersRef.current.level}
-          filterClickHandler={levelFilterClickHandler}
-        />
+        <div className="spell-filter-panel-title">Filter Spells</div>
+        <div className="spell-filter-option-groups">
+          <SpellFilterGroup
+            groupName="Spell Types"
+            groupClassName="spell-tag-filters"
+            filterType="type"
+            options={["Support", "Combat", "Utility"]}
+            activeSpellFilters={activeSpellTagFiltersRef.current.type}
+            filterClickHandler={tagFilterClickHandler}
+          />
+          <SpellFilterGroup
+            groupName="Spell Levels"
+            groupClassName="spell-level-filters"
+            filterType="level"
+            options={["1st-level", "2nd-level", "3rd-level"]}
+            activeSpellFilters={activeSpellTagFiltersRef.current.level}
+            filterClickHandler={levelFilterClickHandler}
+          />
+        </div>
+        <div className="apply-filters-button" onClick={() => {
+          filterButtonClickHandler();
+          updateFilterState();
+        }}> Apply Filters</div>
       </div>
     </div>
   );
