@@ -1,8 +1,7 @@
 import './SpellItem.css';
 import { processText } from '../../functions/dynamicContentParser';
 import { supabase } from '../../client';
-
-const parse = require('html-react-parser');
+import parse from 'html-react-parser';
 
 function SpellItem({
   spell,

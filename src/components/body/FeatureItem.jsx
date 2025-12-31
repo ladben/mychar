@@ -1,7 +1,6 @@
 import './FeatureItem.css';
 import { processText } from '../../functions/dynamicContentParser';
-
-const parse = require('html-react-parser');
+import parse from 'html-react-parser';
 
 function FeatureItem({feature, character, activeFeatureFilters}) {
 

@@ -1,7 +1,7 @@
 import './SpellFilter.css';
 import { useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
-import SpellTagFilter from './SpellTagFilter.js';
+import { createPortal } from 'react-dom';
+import SpellTagFilter from './SpellTagFilter.jsx';
 
 const SpellFilter = ({
   selectedAbility,
@@ -45,7 +45,7 @@ const SpellFilter = ({
   const StickySpellFilterComponent = ({ children }) => {
     const portalRoot = document.getElementById("portal-root");
   
-    return ReactDOM.createPortal(
+    return createPortal(
       <div className="portal-content">
         {children}
       </div>,
@@ -56,7 +56,7 @@ const SpellFilter = ({
   const ExtraSpellFilterPortalComponent = ({children}) => {
     const extraSpellFilterPortalRoot = document.getElementById("extra-spell-filter-container");
 
-    return ReactDOM.createPortal(
+    return createPortal(
       <>
         {children}
       </>,
@@ -79,14 +79,14 @@ const SpellFilter = ({
             data-type='prepared'
             onClick={filterClickHandler}
           >
-            Prepared {'(' + spellsPrepared} + {extraSpells + ')'}
+            Prepared ({spellsPrepared} + {extraSpells})
           </div>
           <div
             className={`spell-filter ${activeSpellFilter === 'selectable' && 'active'}`}
             data-type='selectable'
             onClick={filterClickHandler}
           >
-            Selectable {'(' + spellsPrepared} / {spellsToPrepare + ')'}
+            Selectable ({spellsPrepared} / {spellsToPrepare})
           </div>
         </div>
       </StickySpellFilterComponent>
@@ -96,14 +96,14 @@ const SpellFilter = ({
           data-type='prepared'
           onClick={filterClickHandler}
         >
-          Prepared {'(' + spellsPrepared} + {extraSpells + ')'}
+          Prepared ({spellsPrepared} + {extraSpells})
         </div>
         <div
           className={`spell-filter ${activeSpellFilter === 'selectable' && 'active'}`}
           data-type='selectable'
           onClick={filterClickHandler}
         >
-          Selectable {'(' + spellsPrepared} / {spellsToPrepare + ')'}
+          Selectable ({spellsPrepared} / {spellsToPrepare})
         </div>
       </div>
       {selectedAbility === 'spells' && activeSpellFilter === 'selectable' && (

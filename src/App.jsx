@@ -1,10 +1,10 @@
 import './App.css';
 
 import { useState, useEffect } from 'react';
-import { supabase } from './client';
+import { supabase } from './client.js';
 
-import Heading from './components/header/Heading.js';
-import Body from './components/body/Body.js';
+import Heading from './components/header/Heading.jsx';
+import Body from './components/body/Body.jsx';
 
 function App() {
   const defaultSelectedChar = {

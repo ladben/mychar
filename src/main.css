@@ -17,7 +17,7 @@
 
 @font-face {
   font-family: 'CustomFont';
-  src: url('/public/assets/fonts/draconis/Draconis-JRw6B.ttf') format('truetype');
+  src: url('/assets/fonts/draconis/Draconis-JRw6B.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

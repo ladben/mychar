@@ -1,16 +1,14 @@
 import './Body.css';
 import { useRef, useState, useEffect } from 'react';
-import { register } from 'swiper/element/bundle';
-import { supabase } from '../../client';
+import { supabase } from '../../client.js';
 
-import Navigation from './Navigation.js';
-import FeatureItem from './FeatureItem';
-import SpellItem from './SpellItem';
-import FeatureFilter from './FeatureFilter.js';
-import SpellFilter from './SpellFilter.js';
+import Navigation from './Navigation.jsx';
+import FeatureItem from './FeatureItem.jsx';
+import SpellItem from './SpellItem.jsx';
+import FeatureFilter from './FeatureFilter.jsx';
+import SpellFilter from './SpellFilter.jsx';
 
 function Body({selectedChar}) {
-  register();
   const swiperElRef = useRef(null);
 
   const [selectedAbility, setSelectedAbility] = useState(window.localStorage.getItem('_selected-ability') || 'features');
@@ -52,15 +50,20 @@ function Body({selectedChar}) {
   }, [selectedAbility]);
 
   useEffect(() => {
-    swiperElRef.current.addEventListener('slidechange', (e) => {
-      if (e.detail[0].activeIndex === 0) {
-        setSelectedAbilityFunction('features');
-      }
+    const swiperEl = swiperElRef.current;
+    if (!swiperEl) return;
 
-      if (e.detail[0].activeIndex === 1) {
-        setSelectedAbilityFunction('spells');
-      }
-    });
+    const handler = (e) => {
+      const activeIndex = e.detail[0].activeIndex;
+      if (activeIndex === 0) setSelectedAbilityFunction('features');
+      if (activeIndex === 1) setSelectedAbilityFunction('spells');
+    };
+
+    swiperEl.addEventListener('swiperslidechange', handler);
+
+    return () => {
+      swiperEl.removeEventListener('swiperslidechange', handler);
+    };
   }, []);
 
   useEffect(() => {
@@ -88,15 +91,11 @@ function Body({selectedChar}) {
 
       return numA - numB;
     });
-
-    const cantripRows = spellData.filter(row => row.source === 'cantrip');
-    const otherRows = spellData.filter(row => row.source !== 'cantrip');
     
-    const orderedSpellList = [...cantripRows, ...otherRows];
-    const preparedSpellsNum = orderedSpellList.filter(spell => spell.prepared === true).length;
-    const extraSpellsNum = orderedSpellList.filter(spell => spell.prepared === null).length;
+    const preparedSpellsNum = spellData.filter(spell => spell.prepared === true).length;
+    const extraSpellsNum = spellData.filter(spell => spell.prepared === null).length;
 
-    setSpellList(orderedSpellList);
+    setSpellList(spellData);
     setSpellsPrepared(preparedSpellsNum);
     extraSpells.current = extraSpellsNum;
   }
@@ -120,18 +119,17 @@ function Body({selectedChar}) {
     setFeatureList(orderedData);
   }
 
-  console.log(activeSpellTagFilters);
-
   return (
     <div className='body-wrapper'>
       <Navigation selectedAbility={selectedAbility} updateSelectedAbilityHandler={setSelectedAbilityFunction} concentration={concentration.active}/>
       <div className='swiper-wrapper-div'>
         <swiper-container
           ref={swiperElRef}
-          slides-per-view="1"
-          navigation="false"
-          pagination="false"
-          threshold="10">
+          slides-per-view={1}
+          navigation={false}
+          pagination={false}
+          init="true"
+          threshold={10}>
           <swiper-slide>
             <FeatureFilter activeFeatureFilters={activeFeatureFilters} setActiveFeatureFilters={setActiveFeatureFilters}/>
             <div className='ability-wrapper features-wrapper'>

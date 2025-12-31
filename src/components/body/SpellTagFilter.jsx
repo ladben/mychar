@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import './SpellTagFilter.css';
 
-import SpellFilterGroup from './SpellFilterGroup/SpellFilterGroup.js';
+import SpellFilterGroup from './SpellFilterGroup/SpellFilterGroup.jsx';
 
 const SpellTagFilter = ({
   activeSpellTagFilters,

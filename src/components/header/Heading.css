@@ -25,7 +25,7 @@
 .header::before {
   content: '';
   position: absolute;
-  background-image: url('/public/assets/images/header-background.webp');
+  background-image: url('/assets/images/header-background.webp');
   background-size: cover;
   background-position: bottom;
   width: 100%;
@@ -36,7 +36,7 @@
 .header.animating::after {
   content: '';
   position: absolute;
-  background-image: url('/public/assets/images/header-background.gif');
+  background-image: url('/assets/images/header-background.gif');
   background-size: cover;
   background-position: bottom;
   width: 100%;
