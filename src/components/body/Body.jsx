@@ -77,8 +77,6 @@ function Body({selectedChar}) {
     .select('prepared, spells!inner(id, name, level, castingTime, range, duration, description, tag_utility, tag_combat, tag_support)')
     .eq('characterId', characterId);
 
-    console.log("data: ", data);
-
     const spellData = data.map(row => ({...row.spells, prepared: row.prepared})).sort((a, b) => {
       // Convert level to sortable number
       const levelOrder = (level) => {
@@ -97,8 +95,6 @@ function Body({selectedChar}) {
       // sort by name second
       return a.name.localeCompare(b.name);
     });
-
-    console.log("spellData: ", spellData);
     
     const preparedSpellsNum = spellData.filter(spell => spell.prepared === true).length;
     const extraSpellsNum = spellData.filter(spell => spell.prepared === null).length;
