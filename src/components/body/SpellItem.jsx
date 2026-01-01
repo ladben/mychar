@@ -73,9 +73,9 @@ function SpellItem({
       const canAdd = spellsPrepared < spellsToPrepare;
       if (wantsToRemove || canAdd) {
         const { error } = await supabase
-        .from('spells')
+        .from('characterHasSpell')
         .update({ prepared: !prevPreparedValue })
-        .eq('id', spellId);
+        .eq('spellId', spellId);
     
         if (!error) {
           onUpdate();

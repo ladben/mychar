@@ -74,23 +74,31 @@ function Body({selectedChar}) {
   async function fetchSpellList(characterId) {
     const { data } = await supabase
     .from('characterHasSpell')
-    .select('spells!inner(id, name, level, castingTime, range, duration, description, prepared, tag_utility, tag_combat, tag_support)')
+    .select('prepared, spells!inner(id, name, level, castingTime, range, duration, description, tag_utility, tag_combat, tag_support)')
     .eq('characterId', characterId);
 
-    const spellData = data.map(row => row.spells).sort((a, b) => {
-      const levelA = a.level;
-      const levelB = b.level;
+    console.log("data: ", data);
 
-      // Place "cantrip" first
-      if (levelA === 'cantrip') return -1;
-      if (levelB === 'cantrip') return 1;
+    const spellData = data.map(row => ({...row.spells, prepared: row.prepared})).sort((a, b) => {
+      // Convert level to sortable number
+      const levelOrder = (level) => {
+        if (level === 'cantrip') return 0;
+        return parseInt(level, 10); // "1st-level" -> 1, etc.
+      };
 
-      // Extract the number part from levels like "1st-level", "2nd-level", etc.
-      const numA = parseInt(levelA);
-      const numB = parseInt(levelB);
+      const levelA = levelOrder(a.level);
+      const levelB = levelOrder(b.level);
 
-      return numA - numB;
+      // sort by level first
+      if (levelA !== levelB) {
+        return levelA - levelB;
+      }
+
+      // sort by name second
+      return a.name.localeCompare(b.name);
     });
+
+    console.log("spellData: ", spellData);
     
     const preparedSpellsNum = spellData.filter(spell => spell.prepared === true).length;
     const extraSpellsNum = spellData.filter(spell => spell.prepared === null).length;
