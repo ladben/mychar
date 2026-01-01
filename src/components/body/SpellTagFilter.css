@@ -85,8 +85,8 @@
 .extra-spell-filter-panel .extra-spell-filter-btn.active::after {
   content: '';
   position: absolute;
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   background: var(--accent);
   border-radius: 3px;
   left: 4px;
