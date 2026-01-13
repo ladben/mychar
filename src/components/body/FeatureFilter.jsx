@@ -23,6 +23,13 @@ const FeatureFilter = ({activeFeatureFilters, setActiveFeatureFilters}) => {
         Race
       </div>
       <div
+        className={`ability-filter ${activeFeatureFilters.feat && 'active'}`}
+        data-type='feat'
+        onClick={filterClickHandler}
+      >
+        Feat
+      </div>
+      <div
         className={`ability-filter ${activeFeatureFilters.class && 'active'}`}
         data-type='class'
         onClick={filterClickHandler}

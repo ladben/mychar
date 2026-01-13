@@ -16,7 +16,7 @@ function Body({selectedChar}) {
   const [spellList, setSpellList] = useState([]);
   const [spellsPrepared, setSpellsPrepared] = useState(0);
   const [featureList, setFeatureList] = useState([]);
-  const [activeFeatureFilters, setActiveFeatureFilters] = useState({race: true, class: true, background: true});
+  const [activeFeatureFilters, setActiveFeatureFilters] = useState({race: true, class: true, background: true, feat: true});
   const [activeSpellFilter, setActiveSpellFilter] = useState(window.localStorage.getItem('_active-spell-filter') || 'prepared');
   const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({
     type: {utility: true, combat: true, support: true},
@@ -114,7 +114,7 @@ function Body({selectedChar}) {
     .select('features!inner(id, name, description, source)')
     .eq('characterId', characterId);
 
-    const order = ['race', 'class', 'background'];
+    const order = ['race', 'feat', 'class', 'background'];
 
     const orderedData = data.map(row => row.features).sort((a, b) => {
       return order.indexOf(a.source) - order.indexOf(b.source);
