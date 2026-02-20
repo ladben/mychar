@@ -75,7 +75,8 @@ function SpellItem({
         const { error } = await supabase
         .from('characterHasSpell')
         .update({ prepared: !prevPreparedValue })
-        .eq('spellId', spellId);
+        .eq('spellId', spellId)
+        .eq('characterId', character.id);
     
         if (!error) {
           onUpdate();
