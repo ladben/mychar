@@ -25,7 +25,17 @@ function Body({selectedChar}) {
 
   const spellsToPrepare = useRef(0);
   const extraSpells = useRef(0);
-  spellsToPrepare.current = selectedChar.druid_lvl + selectedChar.wisdom_mod;
+  if (selectedChar.druid_lvl > 0) {
+    spellsToPrepare.current = selectedChar.druid_lvl + selectedChar.wisdom_mod;
+  }
+  
+  if (selectedChar.paladin_lvl > 0) {
+    spellsToPrepare.current = Math.floor(selectedChar.paladin_lvl / 2) + selectedChar.charisma_mod;
+  }
+
+  if (selectedChar.wizard_lvl > 0) {
+    spellsToPrepare.current = selectedChar.wizard_lvl + selectedChar.intelligence_mod;
+  }
 
   window.supabase = supabase;
 

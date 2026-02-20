@@ -7,6 +7,9 @@ function parseExpression (content, character, array = false) {
     const expressionMatches = content.match(expressionRegex) || [];
     const expressions = expressionMatches.map(match => match.slice(1, -1));
 
+    const roundingRegex = /#roundup#/;
+    const isRoundUp = roundingRegex.test(content);
+
     const constantRegex = /%([^%]+)%/g;
     const constantMatches = content.match(constantRegex) || [];
     const constants = constantMatches.map(match => match.slice(1, -1));
@@ -52,6 +55,9 @@ function parseExpression (content, character, array = false) {
             return exp_values.reduce((acc, curr) => acc * curr) * const_values.reduce((acc, curr) => acc * curr);
         }
         if (operator === '/') {
+            if (isRoundUp) {
+                return Math.ceil(exp_values.reduce((acc, curr) => acc / curr) / const_values.reduce((acc, curr) => acc / curr));
+            }
             return Math.floor(exp_values.reduce((acc, curr) => acc / curr) / const_values.reduce((acc, curr) => acc / curr));
         }
     }
@@ -74,6 +80,9 @@ function parseExpression (content, character, array = false) {
             return exp_values.reduce((acc, curr) => acc * curr);
         }
         if (operator === '/') {
+            if (isRoundUp) {
+                return Math.ceil(exp_values.reduce((acc, curr) => acc / curr));
+            }
             return Math.floor(exp_values.reduce((acc, curr) => acc / curr));
         }
     }
