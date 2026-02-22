@@ -8,3 +8,7 @@
   gap: 10px;
   padding: 10px;
 }
+
+.ability-wrapper.resources-wrapper {
+  grid-template-columns: repeat(2, minmax(0, 100%));
+}

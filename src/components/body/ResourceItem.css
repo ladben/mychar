@@ -1,0 +1,15 @@
+.resource-item {
+  border: 1px solid;
+  padding: 10px;
+  justify-content: center;
+  border-radius: 5px;
+  gap: 5px;
+}
+
+.resource-name {
+  font-size: 18px;
+  color: var(--accent);
+  text-align: center;
+  max-width: 100%;
+  word-wrap: break-word;
+}
