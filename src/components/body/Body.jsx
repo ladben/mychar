@@ -23,6 +23,8 @@ function Body({ selectedChar }) {
   const [spellsPrepared, setSpellsPrepared] = useState(0);
   const [featureList, setFeatureList] = useState([]);
   const [resourceList, setResourceList] = useState([]);
+  const [shortRestTriggered, setShortRestTriggered] = useState(0);
+  const [longRestTriggered, setLongRestTriggered] = useState(0);
   const [activeFeatureFilters, setActiveFeatureFilters] = useState({
     race: true,
     class: true,
@@ -39,6 +41,7 @@ function Body({ selectedChar }) {
 
   const spellsToPrepare = useRef(0);
   const extraSpells = useRef(0);
+
   if (selectedChar.druid_lvl > 0) {
     spellsToPrepare.current = selectedChar.druid_lvl + selectedChar.wisdom_mod;
   }
@@ -264,8 +267,28 @@ function Body({ selectedChar }) {
                   key={`resource-${i}`}
                   resource={resource}
                   character={selectedChar}
+                  shortRestTriggered={shortRestTriggered}
+                  longRestTriggered={longRestTriggered}
                 />
               ))}
+              <div className='rest-triggers'>
+                <div
+                  onClick={() => {
+                    setShortRestTriggered((prevState) => prevState + 1);
+                  }}
+                  className='rest-trigger'
+                >
+                  Make short rest
+                </div>
+                <div
+                  onClick={() => {
+                    setLongRestTriggered((prevState) => prevState + 1);
+                  }}
+                  className='rest-trigger'
+                >
+                  Make long rest
+                </div>
+              </div>
             </div>
           </swiper-slide>
         </swiper-container>
