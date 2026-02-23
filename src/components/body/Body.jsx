@@ -202,6 +202,7 @@ function Body({ selectedChar }) {
     setShortRestTriggered(0);
     setLongRestTriggered(0);
     setResourceList([]);
+    setConcentraton({ active: false, spellId: 0 });
   }, [selectedChar]);
 
   return (
