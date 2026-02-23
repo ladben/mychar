@@ -10,14 +10,6 @@ const Counter = ({
   longRestTriggered,
   resetAt,
 }) => {
-  console.log(
-    'Initializing resource ',
-    resourceId,
-    ' for character: ',
-    characterId,
-    ' to: ',
-    currentValue,
-  );
   const [currValue, setCurrValue] = useState(currentValue);
 
   const doOnShortRest = async () => {
@@ -81,7 +73,6 @@ const Counter = ({
     const canDecrease = currValue > 0;
 
     if (canDecrease) {
-      console.log('decreasing for charid: ', characterId);
       const { error } = await supabase
         .from('characterHasResource')
         .update({ current_value: currValue - 1 })

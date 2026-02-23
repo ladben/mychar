@@ -66,7 +66,6 @@ const Values = ({
 
   useEffect(() => {
     if (longRestTriggered > 0) {
-      console.log('long rest trigger: ', longRestTriggered);
       doOnLongRest();
       doOnShortRest();
     }
