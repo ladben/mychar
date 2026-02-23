@@ -11,24 +11,23 @@ const SpellFilter = ({
   spellsToPrepare,
   extraSpells,
   activeSpellTagFilters,
-  setActiveSpellTagFilters
+  setActiveSpellTagFilters,
 }) => {
-
   const spellFilterRef = useRef(null);
   const stickySpellFilterRef = useRef(null);
 
   useEffect(() => {
     const currentRef = spellFilterRef.current;
-    
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (stickySpellFilterRef.current && selectedAbility === 'spells') {
           entry.isIntersecting
-          ? stickySpellFilterRef.current.classList.remove('active')
-          : stickySpellFilterRef.current.classList.add('active');
+            ? stickySpellFilterRef.current.classList.remove('active')
+            : stickySpellFilterRef.current.classList.add('active');
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     if (spellFilterRef.current) {
@@ -43,31 +42,30 @@ const SpellFilter = ({
   }, [selectedAbility]);
 
   const StickySpellFilterComponent = ({ children }) => {
-    const portalRoot = document.getElementById("portal-root");
-  
+    const portalRoot = document.getElementById('portal-root');
+
     return createPortal(
-      <div className="portal-content">
-        {children}
-      </div>,
-      portalRoot
+      <div className='portal-content'>{children}</div>,
+      portalRoot,
     );
   };
 
-  const ExtraSpellFilterPortalComponent = ({children}) => {
-    const extraSpellFilterPortalRoot = document.getElementById("extra-spell-filter-container");
-
-    return createPortal(
-      <>
-        {children}
-      </>,
-      extraSpellFilterPortalRoot
+  const ExtraSpellFilterPortalComponent = ({ children }) => {
+    const extraSpellFilterPortalRoot = document.getElementById(
+      'extra-spell-filter-container',
     );
+
+    return createPortal(<>{children}</>, extraSpellFilterPortalRoot);
   };
 
   const filterClickHandler = (e) => {
-    const type = e.target.dataset.type
-    
+    const type = e.target.dataset.type;
+
     setActiveSpellFilter(type);
+  };
+
+  if (spellsToPrepare === 0) {
+    return null;
   }
 
   return (
@@ -108,11 +106,14 @@ const SpellFilter = ({
       </div>
       {selectedAbility === 'spells' && activeSpellFilter === 'selectable' && (
         <ExtraSpellFilterPortalComponent>
-          <SpellTagFilter activeSpellTagFilters={activeSpellTagFilters} setActiveSpellTagFilters={setActiveSpellTagFilters}/>
+          <SpellTagFilter
+            activeSpellTagFilters={activeSpellTagFilters}
+            setActiveSpellTagFilters={setActiveSpellTagFilters}
+          />
         </ExtraSpellFilterPortalComponent>
       )}
     </>
   );
-}
- 
+};
+
 export default SpellFilter;

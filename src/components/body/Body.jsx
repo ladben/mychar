@@ -31,9 +31,7 @@ function Body({ selectedChar }) {
     background: true,
     feat: true,
   });
-  const [activeSpellFilter, setActiveSpellFilter] = useState(
-    window.localStorage.getItem('_active-spell-filter') || 'prepared',
-  );
+  const [activeSpellFilter, setActiveSpellFilter] = useState('prepared');
   const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({
     type: { utility: true, combat: true, support: true },
     level: { '1st-level': true, '2nd-level': true, '3rd-level': true },
@@ -65,7 +63,6 @@ function Body({ selectedChar }) {
 
   const setActiveSpellFilterFunction = (spellFilter) => {
     setActiveSpellFilter(spellFilter);
-    window.localStorage.setItem('_active-spell-filter', spellFilter);
   };
 
   useEffect(() => {
@@ -203,6 +200,8 @@ function Body({ selectedChar }) {
     setLongRestTriggered(0);
     setResourceList([]);
     setConcentraton({ active: false, spellId: 0 });
+    setActiveSpellFilter('prepared');
+    spellsToPrepare.current = 0;
   }, [selectedChar]);
 
   return (
@@ -266,6 +265,9 @@ function Body({ selectedChar }) {
                 );
               })}
             </div>
+            {spellList.length === 0 && (
+              <div className='no-spells-text'>You are not a spellcaster</div>
+            )}
           </swiper-slide>
           <swiper-slide>
             <div className='ability-wrapper resources-wrapper'>
