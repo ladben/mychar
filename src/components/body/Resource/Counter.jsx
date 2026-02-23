@@ -3,12 +3,21 @@ import { supabase } from '../../../client';
 
 const Counter = ({
   resourceId,
+  characterId,
   currentValue,
   maxValue,
   shortRestTriggered,
   longRestTriggered,
   resetAt,
 }) => {
+  console.log(
+    'Initializing resource ',
+    resourceId,
+    ' for character: ',
+    characterId,
+    ' to: ',
+    currentValue,
+  );
   const [currValue, setCurrValue] = useState(currentValue);
 
   const doOnShortRest = async () => {
@@ -16,7 +25,8 @@ const Counter = ({
       const { error } = await supabase
         .from('characterHasResource')
         .update({ current_value: maxValue })
-        .eq('id', resourceId);
+        .eq('id', resourceId)
+        .eq('characterId', characterId);
 
       if (!error) {
         setCurrValue(maxValue);
@@ -29,7 +39,8 @@ const Counter = ({
       const { error } = await supabase
         .from('characterHasResource')
         .update({ current_value: maxValue })
-        .eq('id', resourceId);
+        .eq('id', resourceId)
+        .eq('characterId', characterId);
 
       if (!error) {
         setCurrValue(maxValue);
@@ -57,7 +68,8 @@ const Counter = ({
       const { error } = await supabase
         .from('characterHasResource')
         .update({ current_value: currValue + 1 })
-        .eq('id', resourceId);
+        .eq('id', resourceId)
+        .eq('characterId', characterId);
 
       if (!error) {
         setCurrValue((prevState) => prevState + 1);
@@ -69,10 +81,12 @@ const Counter = ({
     const canDecrease = currValue > 0;
 
     if (canDecrease) {
+      console.log('decreasing for charid: ', characterId);
       const { error } = await supabase
         .from('characterHasResource')
         .update({ current_value: currValue - 1 })
-        .eq('id', resourceId);
+        .eq('id', resourceId)
+        .eq('characterId', characterId);
 
       if (!error) {
         setCurrValue((prevState) => prevState - 1);

@@ -1,5 +1,5 @@
 import './Body.css';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { supabase } from '../../client.js';
 
 import Navigation from './Navigation.jsx';
@@ -197,6 +197,12 @@ function Body({ selectedChar }) {
 
     setResourceList(orderedData);
   }
+
+  useLayoutEffect(() => {
+    setShortRestTriggered(0);
+    setLongRestTriggered(0);
+    setResourceList([]);
+  }, [selectedChar]);
 
   return (
     <div className='body-wrapper'>

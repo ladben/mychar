@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { supabase } from '../../../client';
 
-const ValueSetter = ({ valueIndex, currValues, setCurrValues, resourceId }) => {
+const ValueSetter = ({
+  valueIndex,
+  currValues,
+  setCurrValues,
+  resourceId,
+  characterId,
+}) => {
   const [inputValue, setInputValue] = useState(0);
 
   const handleChange = (e) => {
     const num = Number(e.target.value);
-    console.log(num);
     setInputValue(num);
   };
 
@@ -21,7 +26,8 @@ const ValueSetter = ({ valueIndex, currValues, setCurrValues, resourceId }) => {
     const { error } = await supabase
       .from('characterHasResource')
       .update({ values: JSON.stringify(newValues) })
-      .eq('id', resourceId);
+      .eq('id', resourceId)
+      .eq('characterId', characterId);
 
     if (!error) {
       setCurrValues(newValues);

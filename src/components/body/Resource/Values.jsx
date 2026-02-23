@@ -4,6 +4,7 @@ import ValueSetter from './ValueSetter';
 
 const Values = ({
   resourceId,
+  characterId,
   resourceValues,
   shortRestTriggered,
   longRestTriggered,
@@ -17,7 +18,8 @@ const Values = ({
     const { error } = await supabase
       .from('characterHasResource')
       .update({ values: JSON.stringify(newValues) })
-      .eq('id', resourceId);
+      .eq('id', resourceId)
+      .eq('characterId', characterId);
 
     if (!error) {
       setCurrValues(newValues);
@@ -48,7 +50,8 @@ const Values = ({
     const { error } = await supabase
       .from('characterHasResource')
       .update({ values: JSON.stringify(newValues) })
-      .eq('id', resourceId);
+      .eq('id', resourceId)
+      .eq('characterId', characterId);
 
     if (!error) {
       setCurrValues(newValues);
@@ -63,6 +66,7 @@ const Values = ({
 
   useEffect(() => {
     if (longRestTriggered > 0) {
+      console.log('long rest trigger: ', longRestTriggered);
       doOnLongRest();
       doOnShortRest();
     }
@@ -92,6 +96,7 @@ const Values = ({
               currValues={currValues}
               setCurrValues={setCurrValues}
               resourceId={resourceId}
+              characterId={characterId}
             />
           </div>
         );

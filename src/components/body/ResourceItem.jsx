@@ -32,6 +32,7 @@ function ResourceItem({
         {!!maxValue && (
           <Counter
             resourceId={resource.id}
+            characterId={character.id}
             currentValue={resource.current_value}
             maxValue={maxValue}
             shortRestTriggered={shortRestTriggered}
@@ -42,6 +43,7 @@ function ResourceItem({
         {!!resourceValues && (
           <Values
             resourceId={resource.id}
+            characterId={character.id}
             resourceValues={resourceValues}
             shortRestTriggered={shortRestTriggered}
             longRestTriggered={longRestTriggered}
