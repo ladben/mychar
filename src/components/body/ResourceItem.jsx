@@ -3,6 +3,8 @@ import { parseExpression } from '../../functions/dynamicContentParser';
 import parse from 'html-react-parser';
 import Counter from './Resource/Counter';
 import Values from './Resource/Values';
+import Text from './Resource/Text';
+import { useState } from 'react';
 
 function ResourceItem({
   resource,
@@ -10,6 +12,8 @@ function ResourceItem({
   shortRestTriggered,
   longRestTriggered,
 }) {
+  const [settingValues, setSettingValues] = useState(false);
+
   const maxValueFormula =
     resource.max_value_formula || resource.base_max_value_formula;
   let maxValue = null;
@@ -20,16 +24,31 @@ function ResourceItem({
 
   const resetAt = resource.reset_at || resource.base_reset_at;
 
-  let resourceValues = null;
-  if (resource.values) {
+  let resourceValues = resource.values;
+  if (resource.type === 'values') {
     resourceValues = JSON.parse(resource.values);
   }
 
+  const handleResourceNameClick = () => {
+    if (resource.type === 'counter') {
+      return;
+    }
+
+    if (resource.type === 'values' || resource.type === 'text') {
+      setSettingValues((prevState) => !prevState);
+    }
+  };
+
   return (
     <div className='resource-item flex-column-centered'>
-      <div className='resource-name'>{resource.name}</div>
+      <div
+        className={`resource-name${settingValues ? ' setting' : ''}`}
+        onClick={handleResourceNameClick}
+      >
+        {resource.name}
+      </div>
       <div className='resource-body flex-column-centered'>
-        {!!maxValue && (
+        {resource.type === 'counter' && (
           <Counter
             resourceId={resource.id}
             characterId={character.id}
@@ -40,7 +59,7 @@ function ResourceItem({
             resetAt={resetAt}
           />
         )}
-        {!!resourceValues && (
+        {resource.type === 'values' && (
           <Values
             resourceId={resource.id}
             characterId={character.id}
@@ -48,6 +67,18 @@ function ResourceItem({
             shortRestTriggered={shortRestTriggered}
             longRestTriggered={longRestTriggered}
             resetAt={resetAt}
+            settingValues={settingValues}
+          />
+        )}
+        {resource.type === 'text' && (
+          <Text
+            resourceId={resource.id}
+            characterId={character.id}
+            value={resourceValues}
+            shortRestTriggered={shortRestTriggered}
+            longRestTriggered={longRestTriggered}
+            resetAt={resetAt}
+            settingValues={settingValues}
           />
         )}
       </div>

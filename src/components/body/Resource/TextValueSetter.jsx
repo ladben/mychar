@@ -1,43 +1,30 @@
 import { useState } from 'react';
 import { supabase } from '../../../client';
 
-const ValueSetter = ({
-  valueIndex,
-  currValues,
-  value,
-  setCurrValues,
-  resourceId,
-  characterId,
-}) => {
+const TextValueSetter = ({ value, setCurrValue, resourceId, characterId }) => {
   const [inputValue, setInputValue] = useState(value);
 
   const handleChange = (e) => {
-    const num = Number(e.target.value);
-    setInputValue(num);
+    setInputValue(e.target.value);
   };
 
   const handleBlur = async () => {
-    const newValues = currValues.map((val, i) => {
-      if (i === valueIndex) {
-        return { value: inputValue, status: 1 };
-      }
-      return { ...val };
-    });
+    const newValue = inputValue;
 
     const { error } = await supabase
       .from('characterHasResource')
-      .update({ values: JSON.stringify(newValues) })
+      .update({ values: newValue })
       .eq('id', resourceId)
       .eq('characterId', characterId);
 
     if (!error) {
-      setCurrValues(newValues);
+      setCurrValue(newValue);
     }
   };
 
   return (
     <input
-      type='number'
+      type='text'
       value={inputValue}
       onChange={handleChange}
       onBlur={handleBlur}
@@ -45,4 +32,4 @@ const ValueSetter = ({
   );
 };
 
-export default ValueSetter;
+export default TextValueSetter;

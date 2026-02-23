@@ -31,6 +31,10 @@
   word-wrap: break-word;
 }
 
+.resource-name.setting {
+  color: var(--green);
+}
+
 .resource-body {
   flex: 1;
   gap: 16px;
@@ -103,4 +107,10 @@
   height: 60%;
   font-size: 24px;
   text-align: center;
+}
+
+.resource-text-value,
+.resource-text-value input {
+  font-size: 20px;
+  max-width: 100%;
 }

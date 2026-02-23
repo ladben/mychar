@@ -9,6 +9,7 @@ const Values = ({
   shortRestTriggered,
   longRestTriggered,
   resetAt,
+  settingValues,
 }) => {
   const [currValues, setCurrValues] = useState(resourceValues);
 
@@ -74,7 +75,9 @@ const Values = ({
   return (
     <div className='resource-values'>
       {currValues?.map((valueObj, i) => {
-        if (valueObj.value !== 0) {
+        const value = valueObj.value;
+
+        if (value !== 0 && !settingValues) {
           return (
             <div
               key={`resource-value-${i}`}
@@ -83,7 +86,7 @@ const Values = ({
                 handleUsage(i);
               }}
             >
-              {valueObj.value}
+              {value}
             </div>
           );
         }
@@ -93,6 +96,7 @@ const Values = ({
             <ValueSetter
               valueIndex={i}
               currValues={currValues}
+              value={value}
               setCurrValues={setCurrValues}
               resourceId={resourceId}
               characterId={characterId}
