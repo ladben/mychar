@@ -8,6 +8,7 @@ import SpellItem from './SpellItem.jsx';
 import ResourceItem from './ResourceItem.jsx';
 import FeatureFilter from './FeatureFilter.jsx';
 import SpellFilter from './SpellFilter.jsx';
+import SpellSlots from './SpellSlots/SpellSlots.jsx';
 
 function Body({ selectedChar }) {
   const swiperElRef = useRef(null);
@@ -23,6 +24,7 @@ function Body({ selectedChar }) {
   const [spellsPrepared, setSpellsPrepared] = useState(0);
   const [featureList, setFeatureList] = useState([]);
   const [resourceList, setResourceList] = useState([]);
+  const [currentSpellSlots, setCurrentSpellSlots] = useState({});
   const [shortRestTriggered, setShortRestTriggered] = useState(0);
   const [longRestTriggered, setLongRestTriggered] = useState(0);
   const [activeFeatureFilters, setActiveFeatureFilters] = useState({
@@ -101,6 +103,7 @@ function Body({ selectedChar }) {
     fetchSpellList(selectedChar.id);
     fetchFeatureList(selectedChar.id);
     fetchResourceList(selectedChar.id);
+    fetchSpellSlots(selectedChar.id);
   }, [selectedChar.id]);
 
   async function fetchSpellList(characterId) {
@@ -195,6 +198,17 @@ function Body({ selectedChar }) {
     setResourceList(orderedData);
   }
 
+  async function fetchSpellSlots(characterId) {
+    const { data } = await supabase
+      .from('characterHasSpellSlots')
+      .select()
+      .eq('characterId', characterId);
+
+    if (data.length > 0) {
+      setCurrentSpellSlots(data[0]);
+    }
+  }
+
   useLayoutEffect(() => {
     setShortRestTriggered(0);
     setLongRestTriggered(0);
@@ -271,6 +285,16 @@ function Body({ selectedChar }) {
           </swiper-slide>
           <swiper-slide>
             <div className='ability-wrapper resources-wrapper'>
+              {selectedChar.max_spell_slots && (
+                <SpellSlots
+                  maxSpellSlots={selectedChar.max_spell_slots}
+                  currentSpellSlots={currentSpellSlots}
+                  setCurrentSpellSlots={setCurrentSpellSlots}
+                  characterId={selectedChar.id}
+                  shortRestTriggered={shortRestTriggered}
+                  longRestTriggered={longRestTriggered}
+                />
+              )}
               {resourceList.map((resource, i) => (
                 <ResourceItem
                   key={`resource-${i}`}
