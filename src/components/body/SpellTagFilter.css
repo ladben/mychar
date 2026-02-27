@@ -10,7 +10,6 @@
   z-index: 100;
   background: var(--accent);
   color: var(--dark);
-  box-shadow: 0px 0px 10px 0px rgba(255,255,255,.5);
   border-radius: 50%;
 }
 
@@ -30,7 +29,7 @@
   background: var(--dark);
   top: calc((100dvh - var(--panel-height)) / 2);
   left: calc((100dvw - var(--panel-width)) / 2);
-  transition: all .2s ease-in;
+  transition: all 0.2s ease-in;
   border: 1px solid;
   border-radius: 10px;
   opacity: 0;
@@ -111,11 +110,11 @@
   right: 0;
   background: var(--grey);
   opacity: 0;
-  transition: all .2s ease-in;
+  transition: all 0.2s ease-in;
   pointer-events: none;
 }
 
 .extra-spell-filter-wrapper.open .extra-spell-filter-backdrop {
-  opacity: .8;
+  opacity: 0.8;
   pointer-events: all;
 }

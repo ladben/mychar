@@ -1,12 +1,14 @@
 .spell-item {
-  border: 1px solid;
+  border: 1px solid var(--accent-dark);
   aspect-ratio: 1;
   padding: 10px;
   justify-content: center;
-  border-radius: 5px;
+  border-radius: 16px;
   gap: 5px;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--item-shadow);
+  background: var(--bg-gradient);
 }
 
 .spell-item.active {
@@ -21,12 +23,13 @@
 
 .spell-item.accented {
   filter: hue-rotate(45deg);
-  border: 1px solid #E0E80B;
-
+  border: 1px solid #e0e80b;
 }
 
 .spell-name {
+  margin-top: 4px;
   font-size: 18px;
+  line-height: 22px;
   text-align: center;
   max-width: 100%;
   word-wrap: break-word;
@@ -41,44 +44,59 @@
 
 .spell-item.active .spell-name {
   color: var(--accent);
-  font-size: 20px;
+  font-size: 24px;
+  line-height: 28px;
+  margin-top: 28px;
+  margin-bottom: 12px;
 }
 
-.spell-level,
-.concentration-spell-indicator {
+.spell-level {
   position: absolute;
   top: 0;
   left: 0;
-  background: var(--accent);
+  background: var(--accent-muted);
   color: var(--dark);
-  padding: 2px 4px;
-  border-radius: 3px;
-  font-size: 14px;
+  padding: 2px 8px;
+  border-radius: 16px 0px 16px 0px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
 .spell-item.prepared .spell-level {
   background: var(--green);
 }
 
-.concentration-spell-indicator {
-  left: unset;
-  right: 0;
-  background: #E0E80B;
-}
-
-.spell-item.active .concentration-spell-indicator.prepared-view::after {
-  content: 'Start';
+.concentration-spell-indicator,
+.ritual-spell-indicator {
   position: absolute;
-  right: 0;
   top: 0;
-  background: inherit;
-  border-radius: inherit;
-  padding: 10px;
-  font-size: 16px;
+  right: 0;
+  background-image: url('/assets/icons/concentration_icon.svg');
+  background-size: contain;
+  width: 32px;
+  height: 24px;
+  opacity: 0.8;
 }
 
-.spell-item.active.accented .concentration-spell-indicator::after {
-  content: 'Stop';
+.ritual-spell-indicator {
+  top: unset;
+  right: unset;
+  bottom: 0;
+  left: 0;
+  background-image: url('/assets/icons/ritual_icon.svg');
+}
+
+.spell-item.active .concentration-spell-indicator,
+.spell-item.active .ritual-spell-indicator {
+  width: 48px;
+  height: 36px;
+}
+
+.spell-item.active .ritual-spell-indicator {
+  top: 0;
+  bottom: unset;
+  left: unset;
+  right: 48px;
 }
 
 .spell-info {
@@ -91,11 +109,13 @@
 
 .spell-description {
   line-height: 1.3;
+  font-size: 16px;
+  margin-top: 24px;
 }
 
 .spell-description p,
 .spell-description ul {
-  margin: 10px 0;
+  margin: 16px 0;
 }
 
 .spell-description ul {

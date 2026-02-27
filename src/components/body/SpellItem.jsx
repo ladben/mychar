@@ -12,32 +12,35 @@ function SpellItem({
   spellsToPrepare,
   spellsPrepared,
   onUpdate,
-  activeSpellTagFilters
+  activeSpellTagFilters,
 }) {
-
   const shouldShowByTagFilter = () => {
     const typeFilters = activeSpellTagFilters.type;
     const levelFilters = activeSpellTagFilters.level;
 
     // If no type filters are active (all are false), return false
-    if (!typeFilters || Object.values(typeFilters).every(value => !value)) {
+    if (!typeFilters || Object.values(typeFilters).every((value) => !value)) {
       return false;
     }
 
     // If no level filters are active (all are false), return false
-    if (!levelFilters || Object.values(levelFilters).every(value => !value)) {
+    if (!levelFilters || Object.values(levelFilters).every((value) => !value)) {
       return false;
     }
 
     // Check if any active filter matches the spell's corresponding tag
-    const showByType = Object.entries(typeFilters).some(([typeKey, isActive]) => {
-      return isActive && spell[`tag_${typeKey}`];
-    });
+    const showByType = Object.entries(typeFilters).some(
+      ([typeKey, isActive]) => {
+        return isActive && spell[`tag_${typeKey}`];
+      },
+    );
 
     // Check if any active filter matches the spell's level
-    const showByLevel = Object.entries(levelFilters).some(([levelKey, isActive]) => {
-      return isActive && spell.level.includes(levelKey);
-    });
+    const showByLevel = Object.entries(levelFilters).some(
+      ([levelKey, isActive]) => {
+        return isActive && spell.level.includes(levelKey);
+      },
+    );
 
     return showByType && showByLevel;
   };
@@ -47,24 +50,32 @@ function SpellItem({
     concentrationSpell = true;
   }
 
+  let ritualSpell = false;
+  if (spell.level.includes('rit')) {
+    ritualSpell = true;
+  }
+
   const spellItemClickHandler = (e) => {
-    if (activeSpellFilter === 'prepared' || !e.target.classList.contains('spell-level')) {
+    if (
+      activeSpellFilter === 'prepared' ||
+      !e.target.classList.contains('spell-level')
+    ) {
       e.target.closest('.spell-item').classList.toggle('active');
       const topPosition = e.target.closest('.spell-item').offsetTop - 10;
-      window.scrollTo({top: topPosition, left: 0, behavior: 'smooth'});
+      window.scrollTo({ top: topPosition, left: 0, behavior: 'smooth' });
     }
-  }
+  };
 
   const concentrationHandler = () => {
     if (activeSpellFilter === 'prepared') {
       if (spell.id === concentration.spellId) {
-        updateConcentration({active: false, spellId: 0});
+        updateConcentration({ active: false, spellId: 0 });
       }
       if (spell.id !== concentration.spellId) {
-        updateConcentration({active: true, spellId: spell.id})
+        updateConcentration({ active: true, spellId: spell.id });
       }
     }
-  }
+  };
 
   async function prepareHandler(spellId, prevPreparedValue) {
     const prepareMode = activeSpellFilter === 'selectable';
@@ -73,11 +84,11 @@ function SpellItem({
       const canAdd = spellsPrepared < spellsToPrepare;
       if (wantsToRemove || canAdd) {
         const { error } = await supabase
-        .from('characterHasSpell')
-        .update({ prepared: !prevPreparedValue })
-        .eq('spellId', spellId)
-        .eq('characterId', character.id);
-    
+          .from('characterHasSpell')
+          .update({ prepared: !prevPreparedValue })
+          .eq('spellId', spellId)
+          .eq('characterId', character.id);
+
         if (!error) {
           onUpdate();
         }
@@ -85,7 +96,7 @@ function SpellItem({
     }
   }
 
-  let concentrationDiffClass = ''
+  let concentrationDiffClass = '';
   if (concentration.active && concentrationSpell) {
     // setting differentiating class if concentration is active
     if (spell.id === concentration.spellId) {
@@ -98,7 +109,12 @@ function SpellItem({
   const alwaysAvailable = spell.prepared === null;
   const prepared = spell.prepared === true;
 
-  const isActive = activeSpellFilter === 'prepared' ? alwaysAvailable || prepared : activeSpellFilter === 'selectable' ? !alwaysAvailable : false;
+  const isActive =
+    activeSpellFilter === 'prepared'
+      ? alwaysAvailable || prepared
+      : activeSpellFilter === 'selectable'
+        ? !alwaysAvailable
+        : false;
 
   if (!isActive) {
     return <></>;
@@ -111,23 +127,46 @@ function SpellItem({
   return (
     <div
       className={
-        'spell-item flex-column-centered'
-        + concentrationDiffClass
-        + (activeSpellFilter === 'selectable' && spell.prepared === true ? ' prepared' : '')
+        'spell-item flex-column-centered' +
+        concentrationDiffClass +
+        (activeSpellFilter === 'selectable' && spell.prepared === true
+          ? ' prepared'
+          : '')
       }
-      onClick={spellItemClickHandler} data-concentration-spell={concentrationSpell}
+      onClick={spellItemClickHandler}
+      data-concentration-spell={concentrationSpell}
     >
       <div className='spell-name'>{spell.name}</div>
       <div
         className='spell-level'
         onClick={() => prepareHandler(spell.id, spell.prepared)}
-      >{spell.level}</div>
-      {concentrationSpell && <div className={`concentration-spell-indicator ${activeSpellFilter === 'prepared' ? 'prepared-view' : ''}`} onClick={concentrationHandler}>C</div>}
+      >
+        {!ritualSpell && spell.level}
+        {ritualSpell && spell.level.replace(' (rit)', '')}
+      </div>
+      {concentrationSpell && (
+        <div
+          className={`concentration-spell-indicator ${activeSpellFilter === 'prepared' ? 'prepared-view' : ''}`}
+          onClick={concentrationHandler}
+        />
+      )}
+      {ritualSpell && <div className='ritual-spell-indicator' />}
       <div className='spell-info'>
-        <div className='spell-casting-time'><b>Casting Time: </b>{spell.castingTime}</div>
-        <div className='spell-range'><b>Range: </b>{spell.range}</div>
-        <div className='spell-duration'><b>Duration: </b>{spell.duration}</div>
-        <div className='spell-description'>{parse(processText(spell.description, character))}</div>
+        <div className='spell-casting-time'>
+          <i>Casting Time: </i>
+          <b>{spell.castingTime}</b>
+        </div>
+        <div className='spell-range'>
+          <i>Range: </i>
+          <b>{spell.range}</b>
+        </div>
+        <div className='spell-duration'>
+          <i>Duration: </i>
+          <b>{spell.duration}</b>
+        </div>
+        <div className='spell-description'>
+          {parse(processText(spell.description, character))}
+        </div>
       </div>
     </div>
   );

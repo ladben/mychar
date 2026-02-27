@@ -12,6 +12,8 @@ function App() {
     id: 1,
   };
 
+  console.log('render');
+
   const [selectedChar, setSelectedChar] = useState(defaultSelectedChar);
   const [characters, setCharacters] = useState([]);
 
@@ -81,7 +83,10 @@ function App() {
 
   async function fetchCharacters() {
     const { data } = await supabase.from('characters').select();
-    setCharacters(data);
+    const sortedData = data.sort((charA, charB) =>
+      charA.name.localeCompare(charB.name),
+    );
+    setCharacters(sortedData);
   }
 
   const updateSelectedChar = (character) => {
@@ -92,6 +97,7 @@ function App() {
 
   return (
     <div className='outer-wrapper flex-column-centered'>
+      <div className='material-background' />
       <Heading
         selectedChar={selectedChar}
         characters={characters}

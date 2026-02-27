@@ -24,3 +24,14 @@
 .outer-wrapper {
   max-width: 100vw;
 }
+
+.material-background {
+  opacity: 0.15;
+  background-image: url(/assets/images/noise_bg.png);
+  width: 100svw;
+  height: 100svh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}

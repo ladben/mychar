@@ -27,13 +27,14 @@
   transform: scaleY(1);
 }
 
-ul.character-list li{
+ul.character-list li {
   width: 100%;
   text-align: center;
   padding: 10px;
   border-top: 1px solid var(--accent);
 }
 
+ul.character-list li.selected,
 ul.character-list li:hover {
   color: var(--accent);
 }
