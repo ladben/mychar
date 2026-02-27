@@ -13,6 +13,10 @@
   grid-template-columns: repeat(2, minmax(0, 100%));
 }
 
+.ability-wrapper.padding_bottom {
+  padding-bottom: 84px;
+}
+
 .no-spells-text {
   height: 50svh;
   display: flex;

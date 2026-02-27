@@ -261,7 +261,9 @@ function Body({ selectedChar }) {
               activeSpellTagFilters={activeSpellTagFilters}
               setActiveSpellTagFilters={setActiveSpellTagFilters}
             />
-            <div className='ability-wrapper spells-wrapper'>
+            <div
+              className={`ability-wrapper spells-wrapper${activeSpellFilter === 'selectable' ? ' padding_bottom' : ''}`}
+            >
               {spellList.map((spell, i) => {
                 return (
                   <SpellItem
