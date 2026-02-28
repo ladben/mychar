@@ -45,7 +45,7 @@ function ResourceItem({
         className={`resource-name${settingValues ? ' setting' : ''}`}
         onClick={handleResourceNameClick}
       >
-        {resource.name}
+        {resource.name_override || resource.name}
       </div>
       <div className='resource-body flex-column-centered'>
         {resource.type === 'counter' && (

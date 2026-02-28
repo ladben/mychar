@@ -12,44 +12,27 @@ const Counter = ({
 }) => {
   const [currValue, setCurrValue] = useState(currentValue);
 
-  const doOnShortRest = async () => {
-    if (resetAt === 'short_rest') {
-      const { error } = await supabase
-        .from('characterHasResource')
-        .update({ current_value: maxValue })
-        .eq('id', resourceId)
-        .eq('characterId', characterId);
+  const refillResource = async () => {
+    const { error } = await supabase
+      .from('characterHasResource')
+      .update({ current_value: maxValue })
+      .eq('id', resourceId)
+      .eq('characterId', characterId);
 
-      if (!error) {
-        setCurrValue(maxValue);
-      }
-    }
-  };
-
-  const doOnLongRest = async () => {
-    if (resetAt === 'long_rest') {
-      const { error } = await supabase
-        .from('characterHasResource')
-        .update({ current_value: maxValue })
-        .eq('id', resourceId)
-        .eq('characterId', characterId);
-
-      if (!error) {
-        setCurrValue(maxValue);
-      }
+    if (!error) {
+      setCurrValue(maxValue);
     }
   };
 
   useEffect(() => {
-    if (shortRestTriggered > 0) {
-      doOnShortRest();
+    if (shortRestTriggered > 0 && resetAt === 'short_rest') {
+      refillResource();
     }
   }, [shortRestTriggered]);
 
   useEffect(() => {
     if (longRestTriggered > 0) {
-      doOnLongRest();
-      doOnShortRest();
+      refillResource();
     }
   }, [longRestTriggered]);
 

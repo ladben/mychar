@@ -12,8 +12,6 @@ function App() {
     id: 1,
   };
 
-  console.log('render');
-
   const [selectedChar, setSelectedChar] = useState(defaultSelectedChar);
   const [characters, setCharacters] = useState([]);
 

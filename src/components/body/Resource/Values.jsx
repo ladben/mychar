@@ -27,18 +27,6 @@ const Values = ({
     }
   };
 
-  const doOnShortRest = async () => {
-    if (resetAt === 'short_rest') {
-      resetValues();
-    }
-  };
-
-  const doOnLongRest = async () => {
-    if (resetAt === 'long_rest') {
-      resetValues();
-    }
-  };
-
   const handleUsage = async (index) => {
     const newValues = currValues.map((val, i) => {
       if (i === index) {
@@ -60,15 +48,14 @@ const Values = ({
   };
 
   useEffect(() => {
-    if (shortRestTriggered > 0) {
-      doOnShortRest();
+    if (shortRestTriggered > 0 && resetAt === 'short_rest') {
+      resetValues();
     }
   }, [shortRestTriggered]);
 
   useEffect(() => {
     if (longRestTriggered > 0) {
-      doOnLongRest();
-      doOnShortRest();
+      resetValues();
     }
   }, [longRestTriggered]);
 

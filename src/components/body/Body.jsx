@@ -189,6 +189,7 @@ function Body({ selectedChar }) {
           base_max_value_formula: res.resources.base_max_value_formula,
           base_reset_at: res.resources.base_reset_at,
           name: res.resources.name,
+          name_override: res.name_override,
           toggleable: res.resources.toggleable,
           type: res.resources.type,
         };

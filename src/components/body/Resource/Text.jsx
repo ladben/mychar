@@ -24,28 +24,15 @@ const Text = ({
     }
   };
 
-  const doOnShortRest = async () => {
-    if (resetAt === 'short_rest') {
-      resetValue();
-    }
-  };
-
-  const doOnLongRest = async () => {
-    if (resetAt === 'long_rest') {
-      resetValue();
-    }
-  };
-
   useEffect(() => {
-    if (shortRestTriggered > 0) {
-      doOnShortRest();
+    if (shortRestTriggered > 0 && resetAt === 'short_rest') {
+      resetValue();
     }
   }, [shortRestTriggered]);
 
   useEffect(() => {
     if (longRestTriggered > 0) {
-      doOnLongRest();
-      doOnShortRest();
+      resetValue();
     }
   }, [longRestTriggered]);
 
