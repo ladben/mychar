@@ -144,13 +144,15 @@ function SpellItem({
         {!ritualSpell && spell.level}
         {ritualSpell && spell.level.replace(' (rit)', '')}
       </div>
-      {concentrationSpell && (
-        <div
-          className={`concentration-spell-indicator ${activeSpellFilter === 'prepared' ? 'prepared-view' : ''}`}
-          onClick={concentrationHandler}
-        />
-      )}
-      {ritualSpell && <div className='ritual-spell-indicator' />}
+      <div className='spell-icon-wrapper'>
+        {concentrationSpell && (
+          <div
+            className={`concentration-spell-indicator ${activeSpellFilter === 'prepared' ? 'prepared-view' : ''}`}
+            onClick={concentrationHandler}
+          />
+        )}
+        {ritualSpell && <div className='ritual-spell-indicator' />}
+      </div>
       <div className='spell-info'>
         <div className='spell-casting-time'>
           <i>Casting Time: </i>

@@ -66,6 +66,11 @@
   background: var(--green);
 }
 
+.spell-icon-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .concentration-spell-indicator,
 .ritual-spell-indicator {
   position: absolute;
@@ -75,7 +80,6 @@
   background-size: contain;
   width: 32px;
   height: 24px;
-  opacity: 0.8;
 }
 
 .ritual-spell-indicator {
@@ -86,17 +90,17 @@
   background-image: url('/assets/icons/ritual_icon.svg');
 }
 
+.spell-item.active .spell-icon-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .spell-item.active .concentration-spell-indicator,
 .spell-item.active .ritual-spell-indicator {
   width: 48px;
   height: 36px;
-}
-
-.spell-item.active .ritual-spell-indicator {
-  top: 0;
-  bottom: unset;
-  left: unset;
-  right: 48px;
+  position: unset;
 }
 
 .spell-info {
