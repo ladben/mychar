@@ -1,0 +1,63 @@
+#spell-statistics-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 100;
+}
+
+#spell-statistics-container i {
+  position: relative;
+  z-index: 100;
+  background: var(--accent);
+  color: var(--dark);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spell-statistics-wrapper i#spell-statistics-open-btn {
+  font-size: 30px;
+  padding: 15px;
+  width: 30px;
+  height: 30px;
+}
+
+.spell-statistics-modal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 100svw;
+  height: 100svh;
+  top: 0;
+  left: 0;
+  background: var(--bg-gradient);
+  z-index: 100;
+  transform: translateY(100%);
+  transition: transform 200ms ease-in-out;
+}
+
+.spell-statistics-modal.open {
+  transform: translateY(0%);
+}
+
+.close-statistics-modal-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding: 32px;
+}
+
+#spell-statistics-container .close-statistics-modal-btn i {
+  background: none;
+  color: var(--light);
+  font-size: 24px;
+}
+
+.spell-statistics-title {
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  font-size: 24px;
+  line-height: 28px;
+  color: var(--accent);
+}

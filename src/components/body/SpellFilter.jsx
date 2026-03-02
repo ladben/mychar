@@ -2,6 +2,7 @@ import './SpellFilter.css';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import SpellTagFilter from './SpellTagFilter.jsx';
+import SpellStatistics from './SpellStatistics.jsx';
 
 const SpellFilter = ({
   selectedAbility,
@@ -12,6 +13,7 @@ const SpellFilter = ({
   extraSpells,
   activeSpellTagFilters,
   setActiveSpellTagFilters,
+  spellList,
 }) => {
   const spellFilterRef = useRef(null);
   const stickySpellFilterRef = useRef(null);
@@ -58,6 +60,14 @@ const SpellFilter = ({
     return createPortal(<>{children}</>, extraSpellFilterPortalRoot);
   };
 
+  const SpellStatisticsPortalComponent = ({ children }) => {
+    const spellStatisticsPortalRoot = document.getElementById(
+      'spell-statistics-container',
+    );
+
+    return createPortal(<>{children}</>, spellStatisticsPortalRoot);
+  };
+
   const filterClickHandler = (e) => {
     const type = e.target.dataset.type;
 
@@ -65,6 +75,13 @@ const SpellFilter = ({
   };
 
   if (spellsToPrepare === 0) {
+    if (selectedAbility === 'spells' && activeSpellFilter === 'prepared') {
+      return (
+        <SpellStatisticsPortalComponent>
+          <SpellStatistics spellList={spellList} />
+        </SpellStatisticsPortalComponent>
+      );
+    }
     return null;
   }
 
@@ -111,6 +128,11 @@ const SpellFilter = ({
             setActiveSpellTagFilters={setActiveSpellTagFilters}
           />
         </ExtraSpellFilterPortalComponent>
+      )}
+      {selectedAbility === 'spells' && activeSpellFilter === 'prepared' && (
+        <SpellStatisticsPortalComponent>
+          <SpellStatistics spellList={spellList} />
+        </SpellStatisticsPortalComponent>
       )}
     </>
   );
