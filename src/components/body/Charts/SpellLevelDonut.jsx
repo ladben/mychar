@@ -46,9 +46,9 @@ const SpellLevelDonut = ({ data }) => {
           </filter>
 
           <linearGradient id='donutGradient' x1='0' y1='0' x2='0' y2='1'>
-            <stop offset='5%' stopColor='var(--accent)' stopOpacity={0.2} />
-            <stop offset='50%' stopColor='var(--accent)' stopOpacity={0.8} />
-            <stop offset='95%' stopColor='var(--accent)' stopOpacity={0.2} />
+            <stop offset='5%' stopColor='var(--accent)' stopOpacity={0.5} />
+            <stop offset='50%' stopColor='var(--accent)' stopOpacity={1} />
+            <stop offset='95%' stopColor='var(--accent)' stopOpacity={0.5} />
           </linearGradient>
         </defs>
 
