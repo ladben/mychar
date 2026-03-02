@@ -75,7 +75,11 @@ const SpellFilter = ({
   };
 
   if (spellsToPrepare === 0) {
-    if (selectedAbility === 'spells' && activeSpellFilter === 'prepared') {
+    if (
+      spellList.length > 0 &&
+      selectedAbility === 'spells' &&
+      activeSpellFilter === 'prepared'
+    ) {
       return (
         <SpellStatisticsPortalComponent>
           <SpellStatistics spellList={spellList} />
