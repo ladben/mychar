@@ -48,15 +48,19 @@
 }
 
 .slot-tracker div {
+  --slot-color: var(--grey);
   width: 30px;
   height: 30px;
-  border: 1px solid var(--grey);
-  background: var(--grey);
+  border: 1px solid var(--slot-color);
+  background: radial-gradient(
+    circle at 30% 30%,
+    var(--slot-color),
+    transparent
+  );
   border-radius: 50%;
   box-shadow: 0 0 0 5px inset var(--dark);
 }
 
 .slot-tracker div.filled {
-  border: 1px solid var(--accent);
-  background: var(--accent);
+  --slot-color: var(--accent);
 }
