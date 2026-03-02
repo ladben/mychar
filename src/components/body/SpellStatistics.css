@@ -23,28 +23,46 @@
   height: 30px;
 }
 
+.spell-statistics-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: var(--grey);
+  opacity: 0;
+  transition: all 0.2s ease-in;
+  pointer-events: none;
+}
+
+.spell-statistics-modal-backdrop.open {
+  opacity: 0.8;
+  pointer-events: all;
+}
+
 .spell-statistics-modal {
   position: fixed;
   display: flex;
   flex-direction: column;
   width: 100svw;
-  height: 100svh;
+  height: calc(100svh - 106px);
   top: 0;
   left: 0;
   background: var(--bg-gradient);
   z-index: 100;
-  transform: translateY(100%);
-  transition: transform 200ms ease-in-out;
+  transform: translateY(150%);
+  transition: transform 350ms ease-in-out;
+  border-radius: 16px 16px 0 0;
 }
 
 .spell-statistics-modal.open {
-  transform: translateY(0%);
+  transform: translateY(106px);
 }
 
 .close-statistics-modal-btn {
   display: flex;
-  justify-content: flex-end;
-  padding: 32px;
+  justify-content: center;
+  padding: 12px;
 }
 
 #spell-statistics-container .close-statistics-modal-btn i {
@@ -53,11 +71,17 @@
   font-size: 24px;
 }
 
+.spell-statistics-charts {
+  flex: 1;
+  overflow: auto;
+}
+
 .spell-statistics-title {
-  padding: 12px;
   display: flex;
   justify-content: center;
   font-size: 24px;
   line-height: 28px;
   color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
 }

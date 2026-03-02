@@ -52,19 +52,20 @@ const SpellRoleRadar = ({ data }) => {
       </text>
     );
   };
+
   return (
-    <ResponsiveContainer width='100%' height='100%'>
+    <ResponsiveContainer width='100%' height={350}>
       <RadarChart
         data={data}
         margin={{ top: 20, right: 40, bottom: 20, left: 40 }}
       >
         <defs>
-          <filter id='glow' x='-20%' y='-20%' width='140%' height='140%'>
+          <filter id='radarGlow' x='-20%' y='-20%' width='140%' height='140%'>
             <feGaussianBlur stdDeviation='4' result='blur' />
             <feComposite in='SourceGraphic' in2='blur' operator='over' />
           </filter>
 
-          <linearGradient id='arcaneGradient' x1='0' y1='0' x2='0' y2='1'>
+          <linearGradient id='radarGradient' x1='0' y1='0' x2='0' y2='1'>
             <stop offset='5%' stopColor='var(--accent)' stopOpacity={0.8} />
             <stop offset='95%' stopColor='var(--accent)' stopOpacity={0.2} />
           </linearGradient>
@@ -85,9 +86,9 @@ const SpellRoleRadar = ({ data }) => {
           dataKey='value'
           stroke='var(--accent)'
           strokeWidth={3}
-          fill='url(#arcaneGradient)'
+          fill='url(#radarGradient)'
           fillOpacity={0.6}
-          style={{ filter: 'url(#glow)' }}
+          style={{ filter: 'url(#radarGlow)' }}
           isAnimationActive={false}
           dot={{
             r: 4,
