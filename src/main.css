@@ -37,6 +37,7 @@ body {
   background-color: var(--dark);
   color: var(--light);
   font-family: 'Nunito Sans', sans-serif;
+  height: 100svh;
 }
 
 body.no-scroll {
