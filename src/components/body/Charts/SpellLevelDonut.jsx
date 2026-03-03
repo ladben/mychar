@@ -62,11 +62,8 @@ const SpellLevelDonut = ({ data }) => {
           dataKey='value'
           isAnimationActive={false}
           stroke='none'
-          // Custom label function to pull the 'name' property
-          // label={({ level }) => level}
           label={renderCustomLabel}
-          // Customizing the label appearance
-          labelLine={{ stroke: 'var(--light)', strokeOpacity: 0.3 }}
+          labelLine={{ stroke: 'none' }}
         >
           {/* The Centered Total */}
           <Label

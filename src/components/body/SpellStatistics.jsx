@@ -21,7 +21,14 @@ const SpellStatistics = ({ spellList }) => {
       (spell) => spell.prepared || spell.prepared === null,
     );
 
-    const groupedByTag = {};
+    const groupedByTag = {
+      control: 0,
+      defense: 0,
+      offense: 0,
+      social: 0,
+      support: 0,
+      utility: 0,
+    };
     const groupedByLevel = {};
 
     availableSpells.forEach((spell) => {

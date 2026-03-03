@@ -8,8 +8,6 @@ import {
 } from 'recharts';
 
 const SpellRoleRadar = ({ data }) => {
-  const totalValue = data.reduce((sum, item) => sum + item.value, 0);
-
   const renderCustomTick = ({
     payload,
     x,
@@ -20,9 +18,8 @@ const SpellRoleRadar = ({ data }) => {
     ...rest
   }) => {
     const item = data.find((d) => d.role === payload.value);
-    // Calculate percentage: (value / total) * 100
-    const percentage =
-      totalValue > 0 ? Math.round((item.value / totalValue) * 100) : 0;
+
+    const percentage = Math.round(item.value * 100);
 
     const verticalShift = index === 0 ? y - 20 : y;
 
@@ -73,7 +70,7 @@ const SpellRoleRadar = ({ data }) => {
 
         <PolarGrid
           stroke='var(--light)'
-          strokeOpacity={0.15}
+          strokeOpacity={0.3}
           gridType='polygon'
         />
 

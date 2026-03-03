@@ -35,7 +35,14 @@ function Body({ selectedChar }) {
   });
   const [activeSpellFilter, setActiveSpellFilter] = useState('prepared');
   const [activeSpellTagFilters, setActiveSpellTagFilters] = useState({
-    type: { utility: true, combat: true, support: true },
+    type: {
+      utility: true,
+      support: true,
+      offense: true,
+      defense: true,
+      control: true,
+      social: true,
+    },
     level: { '1st-level': true, '2nd-level': true, '3rd-level': true },
   });
 
@@ -110,7 +117,7 @@ function Body({ selectedChar }) {
     const { data } = await supabase
       .from('characterHasSpell')
       .select(
-        'prepared, spells!inner(id, name, level, castingTime, range, duration, description, tag_utility, tag_combat, tag_support)',
+        'prepared, spells!inner(id, name, level, castingTime, range, duration, description, tag_utility, tag_support, tag_offense, tag_defense, tag_control, tag_social)',
       )
       .eq('characterId', characterId);
 
