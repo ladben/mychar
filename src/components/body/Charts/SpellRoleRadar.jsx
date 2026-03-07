@@ -8,53 +8,81 @@ import {
 } from 'recharts';
 
 const SpellRoleRadar = ({ data }) => {
-  const renderCustomTick = ({
-    payload,
-    x,
-    y,
-    textAnchor,
-    verticalAnchor,
-    index,
-    ...rest
-  }) => {
+  const renderCustomTick = ({ payload, x, y, textAnchor, index, ...rest }) => {
     const item = data.find((d) => d.role === payload.value);
+    const percentage = item.labelText;
+    const shift = {
+      0: 'translate(0px, -20px)',
+      3: 'translate(-40px, 10px)',
+      4: 'translate(-30px, -10px)',
+      5: 'translate(-30px, -10px)',
+    };
 
-    const percentage = Math.round(item.value * 100);
+    const iconSize = 32;
+    const gap = 4;
+    let iconUrl = `/assets/icons/${payload.value.toLowerCase()}_icon.svg`;
+    const iconPos = [0, 4, 5].includes(index) ? 'right' : 'left';
 
-    const verticalShift = index === 0 ? y - 20 : y;
-
-    return (
+    const imageEl = (
+      <image
+        x={x}
+        y={y - 10} // Adjust to align with the middle of your text block
+        width={iconSize}
+        height={iconSize}
+        href={iconUrl}
+      />
+    );
+    const textEl = (
       <text
         x={x}
-        y={verticalShift}
-        textAnchor={textAnchor}
-        verticalanchor={verticalAnchor}
+        y={y}
+        textAnchor={iconPos === 'right' ? 'end' : 'start'}
         fill='var(--light)'
-        fontSize={16}
+        fontSize={14}
         letterSpacing='1px'
         {...rest}
       >
-        <tspan x={x} dy='0' fontWeight='bold' fill='var(--light)'>
+        <tspan
+          x={x}
+          dy='0'
+          dx={iconPos === 'left' ? iconSize + gap : 0}
+          fill='var(--light)'
+        >
           {payload.value}
         </tspan>
         <tspan
           x={x}
           dy='1.2em'
-          fontSize={14}
+          dx={iconPos === 'left' ? iconSize + gap : 0}
+          fontSize={16}
           fill='var(--accent)'
           fillOpacity={0.8}
+          fontWeight='bold'
         >
-          {percentage}%
+          {percentage}
         </tspan>
       </text>
     );
+
+    return (
+      <g style={{ transform: shift[index] }}>
+        {imageEl}
+        {textEl}
+      </g>
+    );
   };
 
+  const viewWidth = window.innerWidth;
+
   return (
-    <ResponsiveContainer width='100%' height={350}>
+    <ResponsiveContainer
+      width='100%'
+      height={viewWidth - 90}
+      margin={{ bottom: 20 }}
+    >
       <RadarChart
         data={data}
-        margin={{ top: 20, right: 40, bottom: 20, left: 40 }}
+        margin={{ top: 0, right: 40, bottom: 80, left: 40 }}
       >
         <defs>
           <filter id='radarGlow' x='-20%' y='-20%' width='140%' height='140%'>

@@ -56,10 +56,18 @@ const SpellStatistics = ({ spellList }) => {
       }
     });
 
+    const maxSpellNum = Math.max(
+      ...Object.entries(groupedByTag).map(([_, spellNum]) => spellNum),
+    );
+    const allSpellNum = availableSpells.length;
+    const NORMALIZER = 0.9;
+
     const roleChartInput = Object.entries(groupedByTag)
       .map(([tag, spellNum]) => ({
         role: tag.charAt(0).toUpperCase() + tag.slice(1),
-        value: spellNum / availableSpells.length,
+        labelText: `${Math.round((spellNum / allSpellNum) * 100)}%`,
+        value:
+          (spellNum / allSpellNum) * (NORMALIZER / (maxSpellNum / allSpellNum)),
       }))
       .sort((tagA, tagB) => tagA.role.localeCompare(tagB.role));
 
