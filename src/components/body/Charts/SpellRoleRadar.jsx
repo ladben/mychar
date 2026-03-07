@@ -75,11 +75,7 @@ const SpellRoleRadar = ({ data }) => {
   const viewWidth = window.innerWidth;
 
   return (
-    <ResponsiveContainer
-      width='100%'
-      height={viewWidth - 90}
-      margin={{ bottom: 20 }}
-    >
+    <ResponsiveContainer width='100%' height={Math.min(viewWidth * 0.76, 285)}>
       <RadarChart
         data={data}
         margin={{ top: 0, right: 40, bottom: 80, left: 40 }}
