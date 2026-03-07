@@ -37,7 +37,7 @@ const SpellLevelDonut = ({ data }) => {
   };
 
   return (
-    <ResponsiveContainer width='100%' height={350}>
+    <ResponsiveContainer width='100%' height={275}>
       <PieChart>
         <defs>
           <filter id='donutGlow' x='-20%' y='-20%' width='140%' height='140%'>
