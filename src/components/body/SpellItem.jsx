@@ -124,6 +124,11 @@ function SpellItem({
     return <></>;
   }
 
+  const spellComponentsSplit = spell.components.split(' (');
+  const spellComponentLetters = spellComponentsSplit[0];
+  const spellMaterialComponents =
+    spellComponentsSplit.length > 1 ? ` (${spellComponentsSplit[1]}` : '';
+
   return (
     <div
       className={
@@ -161,6 +166,11 @@ function SpellItem({
         <div className='spell-range'>
           <i>Range: </i>
           <b>{spell.range}</b>
+        </div>
+        <div className='spell-components'>
+          <i>Components: </i>
+          <b>{spellComponentLetters}</b>
+          {!!spellMaterialComponents && <span>{spellMaterialComponents}</span>}
         </div>
         <div className='spell-duration'>
           <i>Duration: </i>
