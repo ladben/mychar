@@ -43,7 +43,17 @@ function Body({ selectedChar }) {
       control: true,
       social: true,
     },
-    level: { '1st-level': true, '2nd-level': true, '3rd-level': true },
+    level: {
+      '1st-level': true,
+      '2nd-level': true,
+      '3rd-level': true,
+      '4th-level': true,
+      '5th-level': true,
+      '6th-level': true,
+      '7th-level': true,
+      '8th-level': true,
+      '9th-level': true,
+    },
   });
 
   const spellsToPrepare = useRef(0);
@@ -117,7 +127,7 @@ function Body({ selectedChar }) {
     const { data } = await supabase
       .from('characterHasSpell')
       .select(
-        'prepared, spells!inner(id, name, level, castingTime, range, duration, description, tag_utility, tag_support, tag_offense, tag_defense, tag_control, tag_social)',
+        'prepared, spells!inner(id, name, level, castingTime, range, components, duration, description, tag_utility, tag_support, tag_offense, tag_defense, tag_control, tag_social)',
       )
       .eq('characterId', characterId);
 

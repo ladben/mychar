@@ -74,6 +74,14 @@ const SpellFilter = ({
     setActiveSpellFilter(type);
   };
 
+  const spellLevels = [
+    ...new Set(
+      spellList
+        .map((spell) => spell.level.replace(' (rit)', ''))
+        .filter((level) => level !== 'cantrip'),
+    ),
+  ];
+
   if (spellsToPrepare === 0) {
     if (
       spellList.length > 0 &&
@@ -130,6 +138,7 @@ const SpellFilter = ({
           <SpellTagFilter
             activeSpellTagFilters={activeSpellTagFilters}
             setActiveSpellTagFilters={setActiveSpellTagFilters}
+            spellLevels={spellLevels}
           />
         </ExtraSpellFilterPortalComponent>
       )}

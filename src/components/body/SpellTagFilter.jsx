@@ -6,30 +6,51 @@ import SpellFilterGroup from './SpellFilterGroup/SpellFilterGroup.jsx';
 const SpellTagFilter = ({
   activeSpellTagFilters,
   setActiveSpellTagFilters,
+  spellLevels,
 }) => {
   const activeSpellTagFiltersRef = useRef({ ...activeSpellTagFilters });
   const filterButtonRef = useRef(null);
 
-  const tagFilterClickHandler = (e) => {
-    const type = e.target.dataset.type;
+  const filterClickHandler = (element, filterType) => {
+    const type = element.dataset.type;
+    const level = element.dataset.level;
+    const filterValue = type || level;
+    const isActive = element.classList.contains('active');
 
     const newRef = { ...activeSpellTagFiltersRef.current };
-    newRef.type[type] = !activeSpellTagFiltersRef.current.type[type];
+    const isAllTrue =
+      Object.entries(newRef[filterType])
+        .map(([_, value]) => value)
+        .indexOf(false) === -1;
+
+    Object.keys(activeSpellTagFiltersRef.current[filterType]).forEach((key) => {
+      if (isAllTrue) {
+        key === filterValue
+          ? (newRef[filterType][key] = true)
+          : (newRef[filterType][key] = false);
+      } else {
+        key === filterValue
+          ? (newRef[filterType][key] = !isActive)
+          : (newRef[filterType][key] =
+              activeSpellTagFiltersRef.current[filterType][key]);
+      }
+    });
+
+    const isAllFalseAfterSet =
+      Object.entries(newRef[filterType])
+        .map(([_, value]) => value)
+        .indexOf(true) === -1;
+
+    if (isAllFalseAfterSet) {
+      Object.keys(activeSpellTagFiltersRef.current[filterType]).forEach(
+        (key) => {
+          newRef[filterType][key] = true;
+        },
+      );
+    }
 
     activeSpellTagFiltersRef.current = newRef;
-
-    e.target.classList.toggle('active');
-  };
-
-  const levelFilterClickHandler = (e) => {
-    const level = e.target.dataset.level;
-
-    const newRef = { ...activeSpellTagFiltersRef.current };
-    newRef.level[level] = !activeSpellTagFiltersRef.current.level[level];
-
-    activeSpellTagFiltersRef.current = newRef;
-
-    e.target.classList.toggle('active');
+    element.classList.toggle('active', !isActive);
   };
 
   const filterButtonClickHandler = () => {
@@ -77,15 +98,19 @@ const SpellTagFilter = ({
               'Utility',
             ]}
             activeSpellFilters={activeSpellTagFiltersRef.current.type}
-            filterClickHandler={tagFilterClickHandler}
+            filterClickHandler={(e) => {
+              filterClickHandler(e.target, 'type');
+            }}
           />
           <SpellFilterGroup
             groupName='Spell Levels'
             groupClassName='spell-level-filters'
             filterType='level'
-            options={['1st-level', '2nd-level', '3rd-level']}
+            options={spellLevels}
             activeSpellFilters={activeSpellTagFiltersRef.current.level}
-            filterClickHandler={levelFilterClickHandler}
+            filterClickHandler={(e) => {
+              filterClickHandler(e.target, 'level');
+            }}
           />
         </div>
         <div
